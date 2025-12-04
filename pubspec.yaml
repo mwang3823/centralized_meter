@@ -1,0 +1,219 @@
+name: dbtt
+description: "A new dbtt project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: 1.0.8
+  flutter_launcher_icons: 0.14.3
+  rxdart: 0.28.0
+  connectivity_plus: 6.1.3
+  shared_preferences: 2.5.3
+  fluttertoast: 8.2.12
+  overlay_support: 2.1.0
+  intl: 0.20.2
+  url_launcher: 6.3.1
+  image_picker: 1.1.2
+  permission_handler: 11.4.0
+  device_info_plus: 11.3.3
+  flutter_image_compress: 2.4.0
+  path_provider: 2.1.5
+  auto_size_text_plus: 3.0.2
+  package_info_plus: 8.3.0
+  dio: 5.8.0+1
+  saver_gallery: 4.0.1
+  card_swiper: 3.0.1
+  dotted_border: 2.1.0
+  syncfusion_flutter_charts: 31.1.21
+  syncfusion_flutter_gauges: 31.1.21
+  app_settings: 6.1.1
+  bluetooth_print_plus: 2.4.6
+  flutter_blue_plus: 1.35.5
+  screenshot: 3.0.0
+  image: 4.5.4
+  geolocator: 14.0.2
+  barcode_widget: 2.0.4
+  google_maps_flutter: 2.12.3
+  webview_flutter: 4.13.0
+  flutter_map: 8.2.1
+  latlong2: 0.9.1
+  pie_chart_3d: 0.0.7
+  fl_chart: 0.63.0
+  sqflite: 2.4.2
+  path: 1.9.1
+  intl_utils: 2.8.12
+  syncfusion_flutter_pdfviewer: ^31.1.21
+  pdfx: ^2.9.2
+  
+  
+
+  device_id:
+    git:
+      url: https://github.com/leovu/device_id
+      ref: 1.1.2
+
+# flutter pub pub run flutter_launcher_icons:main
+flutter_icons:
+  image_path: "assets/icon/launcher.png"
+  android: true
+  ios: true
+
+# flutter pub run intl_utils:generate
+flutter_intl:
+  enabled: true # Required. Must be set to true to activate the package. Default: false
+  main_locale: vi # Optional. Sets the main locale used for generating localization files. Provided value should consist of language code and optional script and country codes separated with underscore (e.g. 'en', 'en_GB', 'zh_Hans', 'zh_Hans_CN'). Default: en
+  class_name: LangKey # Optional. Sets the name for the generated localization class. Default: S
+  arb_dir: assets/language # Optional. Sets the directory of your ARB resource files. Provided value should be a valid path on your system. Default: lib/l10n
+  output_dir: lib/common/localization # Optional. Sets the directory of generated localization files. Provided value should be a valid path on your system. Default: lib/generated
+
+# Build => Generate Flutter Assets hoặc Option(mac)/Alt(win) + G
+flutter_assets_generator:
+  output_dir: common # Optional. Sets the directory of generated localization files. Provided value should be a valid path on lib dir. Default: generated
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/image/
+    - assets/icon/
+    - assets/font/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/font/montserrat/Montserrat-Thin.ttf
+          weight: 100
+        - asset: assets/font/montserrat/Montserrat-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-ExtraLight.ttf
+          weight: 200
+        - asset: assets/font/montserrat/Montserrat-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-Light.ttf
+          weight: 300
+#        - asset: assets/font/montserrat/Montserrat-LightItalic.ttf
+#          weight: 300
+#          style: italic
+        - asset: assets/font/montserrat/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/font/montserrat/Montserrat-Light.ttf
+          weight: 400
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/font/montserrat/Montserrat-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/font/montserrat/Montserrat-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/font/montserrat/Montserrat-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: assets/font/montserrat/Montserrat-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/font/montserrat/Montserrat-Black.ttf
+          weight: 900
+        - asset: assets/font/montserrat/Montserrat-BlackItalic.ttf
+          weight: 900
+          style: italic
+
+    - family: Roboto
+      fonts:
+        - asset: assets/font/roboto/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/font/roboto/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/font/roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/font/roboto/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/font/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/font/roboto/Roboto-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/font/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/font/roboto/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/font/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/font/roboto/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/font/roboto/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/font/roboto/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
