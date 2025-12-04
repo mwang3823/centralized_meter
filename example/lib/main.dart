@@ -31,69 +31,7 @@ class LoginSimulatorPage extends StatefulWidget {
 }
 
 class _LoginSimulatorPageState extends State<LoginSimulatorPage> {
-  bool _isLoading = false;
-  String? _errorMessage;
-
-  Future<void> _simulateLoginAndInitPlugin() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    try {
-      final fakeLoginResponse = LoginResModel(
-        id: 1,
-        tenDangNhap: 'nhanvien01',
-        hoTen: 'Nguyen Van A',
-        soDienThoai: '0901234567',
-        maNhanVien: 'NV001',
-        chucVuId: 1,
-        chucVu: 'Nhan vien',
-        phongBanId: 1,
-        phongBan: 'Phong Kinh Doanh',
-        trangThai: true,
-        accessToken:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDkiLCJqdGkiOiI1OWE3NmIwYy03OWRmLTQxMWYtODhiYy0yNTFlMDYxMGY5N2EiLCJuaGFudmllbmlkIjoiMzA5IiwidGVuZGFuZ25oYXAiOiJ0ZXN0IiwibXNudiI6Ijk5OTk5IiwibmJmIjoxNzY0ODMxNjk4LCJleHAiOjE3NjU0MzY0OTgsImlzcyI6IndhdGVyLWJpbGxpbmctYXBpIiwiYXVkIjoid2F0ZXItYmlsbGluZy1hcGkuY2xpZW50In0.NQ51xgIysoAnyh0X7GDLzeri13oGgI8u6hSshsm1TVs',
-        refreshToken:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDkiLCJqdGkiOiIwZDQ2NjkxOS0xYzhjLTQ4YTQtYTlhNC1mZDEzMmQwYTcwMGMiLCJuaGFudmllbmlkIjoiMzA5IiwidGVuZGFuZ25oYXAiOiJ0ZXN0IiwibXNudiI6Ijk5OTk5IiwibmJmIjoxNzY0ODMxNjk4LCJleHAiOjE3Njc0MjM2OTgsImlzcyI6IndhdGVyLWJpbGxpbmctYXBpIiwiYXVkIjoid2F0ZXItYmlsbGluZy1hcGkucmVmcmVzaCJ9.J7pdDt0aZQ1EmkvWQCiXJTeuOaqTboCEu97V0mPQuWI',
-        refreshTokenExpiry: '2025-12-31',
-      );
-
-      await DbttPlugin.init(
-        accessToken: fakeLoginResponse.accessToken!,
-        refreshToken: fakeLoginResponse.refreshToken!,
-        userInfo: fakeLoginResponse,
-        locale: const Locale('vi'), // Optional, default la 'vi'
-        deviceId: 'device_id_12345', // Optional
-        digitizeKey:
-            "https://services.capnuocnhabe.vn/tracuuhoso/viewfilesho?id=",
-        environment: "DEV",
-        displayPrint: true,
-        enableLang: true,
-        langDefault: "vi",
-        mapApiKey: "AIzaSyClCOES8RBETmqX4qjixwveOuEuo7s-Xf4",
-        releaseDate: DateTime.now().toString(),
-        server: "http://nhabe-api.e-point.xyz/",
-      );
-
-      if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const PluginWrapperPage()),
-        );
-      }
-    } catch (e) {
-      print(e);
-      setState(() {
-        _errorMessage = 'Loi khoi tao plugin: $e';
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
