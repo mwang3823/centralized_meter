@@ -63,7 +63,7 @@ Widget buildInfoCard({
                 child: CustomText(
                   text: title,
                   maxLines: 2,
-                  fontSize: AppTextSizes.subBody,
+                  fontSize: AppTextSizes.body,
                   color: AppColors.white,
                   fontWeight: FontWeight.w600,
                   overflow: TextOverflow.ellipsis,
@@ -89,7 +89,7 @@ Widget buildInfoCard({
             text: subtitle,
             textAlign: TextAlign.left,
             color: Colors.white,
-            fontSize: AppTextSizes.tiny,
+            fontSize: AppTextSizes.subBody,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),

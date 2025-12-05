@@ -1,5 +1,6 @@
 import 'package:dbtt/dbtt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
+      // Thêm localization delegates cho plugin
+      localizationsDelegates: [
+        DbttPlugin.localizationDelegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: DbttPlugin.supportedLocales,
+      locale: const Locale('vi'),
       home: const LoginPage(),
     );
   }
@@ -41,9 +51,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     // Default values for testing
-    _serverController.text = 'h/';
-    _usernameController.text="";
-    _passwordController.text="";
+    _serverController.text = 'https://ghithu.capnuocnhabe.vn:1829/mobile/';
+    _usernameController.text="test";
+    _passwordController.text="123456";
 
   }
 

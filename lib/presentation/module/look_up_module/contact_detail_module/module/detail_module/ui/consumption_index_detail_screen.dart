@@ -83,7 +83,7 @@ class ConsumptionIndexDetailScreen extends BaseView {
               CustomColumnInformationCustom(
                 title: LangKey.current.reading_date,
                 content: CustomAppFormat.parseAndFormatDate(
-                  CustomAppFormat.formatValue(data.ngayDoc),
+                  data.ngayDoc,
                 ),
                 isTitleBold: true,
               ),

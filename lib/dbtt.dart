@@ -24,25 +24,11 @@ import 'presentation/module/overview_report_module.dart/ui/overview_report_scree
 
 export 'data/models/response/login_res_model.dart';
 export 'data/models/response/customer_list_res_model.dart';
-export 'common/localization/l10n.dart' show LangKey;
+export 'common/localization/l10n.dart' show LangKey, AppLocalizationDelegate;
 
 class DbttPlugin {
   static bool _initialized = false;
-
-  /// Initialize plugin với login
-  ///
-  /// [username] - Tên đăng nhập (required)
-  /// [password] - Mật khẩu (required)
-  /// [locale] - Ngôn ngữ, mặc định tiếng Việt
-  /// [deviceId] - ID thiết bị
-  /// [digitizeKey] - Key số hóa
-  /// [displayPrint] - Hiển thị print debug
-  /// [enableLang] - Bật đa ngôn ngữ
-  /// [mapApiKey] - Key bản đồ
-  /// [server] - URL server
-  ///
-  /// Returns [LoginResModel] nếu login thành công
-  /// Throws [Exception] nếu login thất bại
+  
   static Future<LoginResModel> init({
     required String username,
     required String password,
@@ -58,7 +44,6 @@ class DbttPlugin {
       return Globals.model!;
     }
 
-    // Set asset prefix for plugin mode (always plugin)
     Assets.packagePrefix = 'packages/dbtt/';
 
     await Config.getPreferences(
@@ -74,13 +59,10 @@ class DbttPlugin {
 
     Globals.locale = locale;
 
-    // Initialize date formatting for locale (fix LocaleDataException)
     await initializeDateFormatting(locale.languageCode, null);
 
-    // Load localization
     await LangKey.load(locale);
 
-    // Gọi API login (không cần context cho login API)
     final ResponseModel response = await Repository.loginWithoutContext(
       LoginReqModel(username: username, password: password),
     );
@@ -93,7 +75,6 @@ class DbttPlugin {
 
     final LoginResModel loginData = LoginResModel.fromJson(response.data);
 
-    // Lưu tokens
     await Globals.prefs.setString(SharedPrefsKey.token, loginData.accessToken);
     await Globals.prefs.setString(
       SharedPrefsKey.refresh_token,
@@ -137,14 +118,6 @@ class DbttPlugin {
     );
   }
 
-  /// Tìm kiếm khách hàng
-  ///
-  /// [keyword] - Từ khóa tìm kiếm
-  /// [searchType] - Loại tìm kiếm: 'danhbo', 'hoten', 'lotrinh', 'diachi'
-  /// [page] - Trang (mặc định: 1)
-  ///
-  /// Returns 'dbtt' nếu chỉ tìm được 1 phần tử
-  /// Returns null nếu tìm được danh sách (nhiều hơn 1) hoặc rỗng
   static Future<String?> searchCustomer(
     BuildContext context, {
     required String keyword,
@@ -153,7 +126,6 @@ class DbttPlugin {
   }) async {
     _assertInitialized();
 
-    // Normalize keyword nếu là số
     final normalizedKeyword =
         searchType == 'danhbo'
             ? Utilities.normalizeNumber(keyword)
@@ -172,15 +144,12 @@ class DbttPlugin {
 
     final result = CustomerListResModel.fromJson(response.data);
 
-    // Trả về 'dbtt' nếu chỉ có 1 phần tử, null nếu nhiều hơn hoặc rỗng
     if (result.items != null && result.items!.length == 1) {
-      return 'dbtt';
+      return result.items!.first.danhBo;
     }
     return null;
   }
 
-  /// Push đến màn hình chi tiết khách hàng với tab cụ thể
-  ///
   /// [tabIndex] - Index của tab cần mở:
   ///   0: Overview (Tổng quan)
   ///   1: Payment history (Lịch sử thanh toán)
@@ -228,4 +197,14 @@ class DbttPlugin {
   static Locale get currentLocale => Globals.locale;
 
   static String? get serverUrl => Globals.config.server;
+
+  /// Localization delegate - thêm vào MaterialApp.localizationsDelegates
+  static LocalizationsDelegate<LangKey> get localizationDelegate =>
+      LangKey.delegate;
+
+  /// Supported locales của plugin
+  static List<Locale> get supportedLocales => const [
+        Locale('vi'),
+        Locale('en'),
+      ];
 }
