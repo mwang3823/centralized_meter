@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:dbtt/common/utilities.dart';
-import 'package:dbtt/common/utils/custom_dialog.dart';
 import 'package:dbtt/common/utils/custom_navigator.dart';
 import 'package:dbtt/data/models/base/response_model.dart';
 import 'package:dbtt/data/models/response/customer_detail_res_model.dart';

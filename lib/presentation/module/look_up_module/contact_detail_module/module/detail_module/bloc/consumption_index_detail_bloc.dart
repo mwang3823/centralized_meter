@@ -1,7 +1,6 @@
 import 'package:dbtt/presentation/widget/custom_holdhouse_detail.dart';
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:dbtt/common/constant.dart';
 import 'package:dbtt/data/models/response/consumption_index_res_model.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 import '../../../../../../../../../../../common/assets.dart';
@@ -14,6 +13,8 @@ import '../../../../../../../../../../../data/models/base/response_model.dart';
 import '../../../../../../../../../../../data/models/request/consumption_index_req_model.dart';
 import '../../../../../../../../../../../data/models/response/customer_detail_res_model.dart';
 import '../../../../../../../../../../../domain/repository.dart';
+import '../../../../../../../common/globals.dart';
+import '../../../../../../../data/network/api/api.dart';
 import '../../../src/ui/reading_schedule_screen.dart' show ReadingSchduleScreen;
 import '../ui/consumption_index_detail_screen.dart';
 import 'package:http/http.dart' as http;
@@ -98,7 +99,7 @@ class ConsumptionIndexDetailBloc
   }
 
   fetchIncidents() async {
-    String url = NhabeApi.hinhDocSo;
+    String url = '${Globals.config.nhaBeSever}${NhabeApi.hinhDocSo}';
 
     final parts = splitPeriod(widget.model?.kyThanhToan ?? '');
     final nam = parts[0];

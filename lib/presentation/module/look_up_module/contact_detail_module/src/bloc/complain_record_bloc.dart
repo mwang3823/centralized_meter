@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dbtt/common/constant.dart';
 import 'package:dbtt/data/models/base/response_model.dart';
 import 'package:dbtt/data/models/response/complain_record_res_model.dart';
 import 'package:dbtt/domain/repository.dart';
@@ -12,6 +11,9 @@ import '../../../../../../../../../../data/models/request/lookup_payment_history
 import '../../../../../../../../../../data/models/response/complain_image_res_model.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../../../common/globals.dart';
+import '../../../../../../data/network/api/api.dart';
 
 class ComplaintRecordBloc {
   final BuildContext context;
@@ -47,7 +49,7 @@ class ComplaintRecordBloc {
 
 
   onGetImage() async {
-    String url = NhabeApi.hinhAnhKhieuNai;
+    String url = '${Globals.config.nhaBeSever}${NhabeApi.hinhAnhKhieuNai}';
 
     final requestBody = {"valstring1": rawModel.danhBo};
 

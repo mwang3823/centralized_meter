@@ -13,7 +13,7 @@ Widget buildStatCard({
   double? height,
 }) {
   return Container(
-    height: height ?? 88,
+    height: height ?? 90,
     padding: const EdgeInsets.all(AppSizes.minPadding),
     decoration: BoxDecoration(
       color: Colors.white,
@@ -47,7 +47,7 @@ Widget buildStatCard({
                     Flexible(
                       child: CustomAutoSizeText(
                         text: value ?? '',
-                        fontSize: AppTextSizes.subBody,
+                        fontSize: AppTextSizes.subTitle,
                         maxLines: 1,
                         color: valueColor,
                         fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ Widget buildStatCard({
                           unit,
                           style: AppFonts.montserratStyle(
                             color: valueColor,
-                            fontSize: AppTextSizes.tiny.value,
+                            fontSize: AppTextSizes.body.value,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -71,10 +71,10 @@ Widget buildStatCard({
               const SizedBox(height: 4.0),
               CustomAutoSizeText(
                 text: description ?? '',
-                fontSize: AppTextSizes.subBody,
+                fontSize: AppTextSizes.body,
                 maxLines: 2,
                 color: AppColors.black,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
               ),
             ],
           ),

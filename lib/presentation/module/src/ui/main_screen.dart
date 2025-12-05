@@ -1,7 +1,6 @@
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common/assets.dart';
 import '../../../../common/theme.dart';
 import '../../../../data/models/base/option_model.dart';
 import '../../../base/base_view.dart';

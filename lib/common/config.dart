@@ -16,6 +16,7 @@ class Config {
     String? mapApiKey,
     String? releaseDate,
     String? server,
+    String? nhaBeSever
   }) async {
     await SharedPreferences.getInstance().then((event) async {
       Globals.prefs = SharedPrefs(event);
@@ -29,6 +30,7 @@ class Config {
         mapApiKey: mapApiKey,
         releaseDate: releaseDate,
         server: server,
+        nhaBeSever: nhaBeSever
       );
       if ((Globals.config.langDefault ?? "").isNotEmpty) {
         Constant.langDefault = Globals.config.langDefault!;
@@ -42,6 +44,7 @@ class Config {
     return;
   }
 
+  String? nhaBeSever;
   String? server;
   String? langDefault;
   bool? enableLang;
@@ -58,6 +61,7 @@ class Config {
     this.displayPrint,
     this.mapApiKey,
     this.digitizeKey,
+    this.nhaBeSever
   });
 
   Config.fromJson(Map<String, dynamic> json) {
@@ -71,6 +75,8 @@ class Config {
     displayPrint = json['displayPrint'] ?? false;
     mapApiKey = json['mapApiKey'];
     digitizeKey = json['digitizeKey'];
+    nhaBeSever = json['nhaBeSever'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +88,7 @@ class Config {
     data['displayPrint'] = this.displayPrint;
     data['mapApiKey'] = this.mapApiKey;
     data['digitizeKey'] = this.digitizeKey;
+    data['nhaBeSever'] = this.nhaBeSever;
     return data;
   }
 }

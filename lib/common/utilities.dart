@@ -6,6 +6,7 @@ import 'package:dbtt/common/localization/l10n.dart';
 import 'package:dbtt/common/utils/custom_dialog.dart';
 import 'package:dbtt/common/utils/custom_navigator.dart';
 import 'package:dbtt/data/local/shared_prefs/shared_prefs_key.dart';
+import 'package:dbtt/data/network/api/api.dart';
 import 'package:dbtt/presentation/widget/custom_text.dart';
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:device_id/device_id.dart';
@@ -175,7 +176,7 @@ class Utilities {
 
   static onGetLatLong(String danhBo) async {
     final res = await http.post(
-      Uri.parse(NhabeApi.toaDoKhachHang),
+      Uri.parse('${Globals.config.nhaBeSever}${NhabeApi.toaDoKhachHang}'),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Cookie": "AspxAutoDetectCookieSupport=1",

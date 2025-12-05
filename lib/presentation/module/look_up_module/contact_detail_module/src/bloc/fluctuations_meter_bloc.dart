@@ -1,11 +1,12 @@
+import 'package:dbtt/data/network/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:dbtt/common/utilities.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 
-import '../../../../../../../../../../common/constant.dart';
 import '../../../../../../../../../../data/models/response/conflutuation_res_model.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
+import '../../../../../../common/globals.dart' show Globals;
 
 class FluctuationMeterBloc {
   final BuildContext context;
@@ -25,7 +26,7 @@ class FluctuationMeterBloc {
   final streamBienDong = BehaviorSubject<List<FluctuationMeterResModel>>();
 
   onGetFluctuation() async {
-    String url = NhabeApi.bienDong;
+    String url = '${Globals.config.nhaBeSever}${NhabeApi.bienDong}';
 
     try {
       final fluctuations =

@@ -36,7 +36,7 @@ Widget buildInfoCard({
     onTap: onTap,
     borderRadius: BorderRadius.circular(AppSizes.minBorderRadius),
     child: Container(
-      height: height ?? 120,
+      height: height ?? 115,
       width: width,
       padding: EdgeInsets.all(AppSizes.minPadding),
       decoration: BoxDecoration(
@@ -80,7 +80,7 @@ Widget buildInfoCard({
               fontWeight: FontWeight.bold,
             ),
             backgroundColor: Colors.white,
-            fontSize: AppTextSizes.subBody.value,
+            fontSize: AppTextSizes.body.value,
             fontWeight: FontWeight.bold,
             maxLines: 2,
           ),

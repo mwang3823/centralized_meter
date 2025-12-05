@@ -404,7 +404,7 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
           CustomText(
             text: model.isSelected == true ? model.subValue : model.text ?? '',
             fontWeight: FontWeight.w500,
-            fontSize: AppTextSizes.subBody,
+            fontSize: AppTextSizes.body,
             color: model.isSelected == true
                 ? AppColors.white
                 : model.backgroundColor,

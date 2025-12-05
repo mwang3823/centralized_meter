@@ -1,9 +1,9 @@
+import 'package:dbtt/data/network/api/api.dart';
 import 'package:dbtt/presentation/module/look_up_module/contact_detail_module/module/detail_module/ui/payment_history_detail_screen.dart';
 import 'package:dbtt/presentation/widget/custom_holdhouse_detail.dart';
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:dbtt/common/constant.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 import '../../../../../../../../../../../common/assets.dart';
 import '../../../../../../../../../../../common/localization/l10n.dart';
@@ -18,6 +18,7 @@ import '../../../../../../../../../../../data/models/response/customer_detail_re
 import '../../../../../../../../../../../data/models/response/e_invoice_res_model.dart';
 import '../../../../../../../../../../../data/models/response/payment_history_detail_res_model.dart';
 import '../../../../../../../../../../../domain/repository.dart';
+import '../../../../../../../common/globals.dart';
 import '../../../src/ui/reading_schedule_screen.dart';
 
 class PaymentHistoryDetailBloc extends BaseBloc<PaymentHistoryDetailScreen>
@@ -82,7 +83,7 @@ class PaymentHistoryDetailBloc extends BaseBloc<PaymentHistoryDetailScreen>
   }
 
   getEInvoice() async {
-    String url = NhabeApi.hoaDonDienTu;
+    String url = '${Globals.config.nhaBeSever}${NhabeApi.hoaDonDienTu}';
 
     final body = {
       "valstring1": widget.maDanhBo,

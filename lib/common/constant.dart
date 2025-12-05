@@ -51,7 +51,6 @@ class HeroTag {
   static const String logo = "logo";
 }
 
-
 class ReasonCode {
   static const KHAC = "KHAC";
 }
@@ -77,25 +76,6 @@ class PrinterSize {
   static const size416 = 416;
   static const size448 = 448;
   static const size512 = 512;
-}
-
-class NhabeApi {
-  static String hinhAnhKhieuNai =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/LayFileKhieuNai";
-  static String toaDoKhachHang =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/toadokhachhang";
-  static String hinhBaoThay =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/LayHinhBaoThayTheoDanhBo";
-  static String hinhDocSo =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/LayHinDocSoTheoNamKyDanhBo";
-  static String hinhAnhDocSoNAT =
-      "https://kinhdoanh.capnuocnhabe.vn/api/DocHinhTuNatServerWao";
-  static String bienDong =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/SeachBienDongKinhDoanhWao";
-  static String danhSachHinhAnhDanhBo =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/ViewHinhAnhKhachHangWao";
-  static String hoaDonDienTu =
-      "https://kinhdoanh.capnuocnhabe.vn/api/wao/ExportHDDTWao";
 }
 
 class WaterServiceLookup {

@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:dbtt/data/network/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 
 import '../../../../../../../../../../common/assets.dart';
-import '../../../../../../../../../../common/constant.dart';
 import '../../../../../../../../../../common/utilities.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
 import '../../../../../../../../../../data/models/response/image_customer_res_model.dart';
+import '../../../../../../common/globals.dart';
 
 class ImageCustomerBloc {
   final BuildContext context;
@@ -29,7 +30,7 @@ class ImageCustomerBloc {
   final streamImage = BehaviorSubject<List<ImageCustomerResModel>>();
 
   onGetCustomerImage() async {
-    String url = NhabeApi.danhSachHinhAnhDanhBo;
+    String url = '${Globals.config.nhaBeSever}${NhabeApi.danhSachHinhAnhDanhBo}';
 
     final images = await Utilities.fetchDataList<ImageCustomerResModel>(
       url: url,

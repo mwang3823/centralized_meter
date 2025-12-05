@@ -1,7 +1,6 @@
-
+import 'package:dbtt/data/network/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:dbtt/common/constant.dart';
 import 'package:dbtt/common/utilities.dart';
 import 'package:dbtt/data/models/base/response_model.dart';
 import 'package:dbtt/domain/repository.dart';
@@ -10,6 +9,7 @@ import '../../../../../../../../../../data/models/request/lookup_payment_history
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
 import '../../../../../../../../../../data/models/response/meter_replacement_history.dart';
 import '../../../../../../../../../../data/models/response/report_replacement_res_model.dart';
+import '../../../../../../common/globals.dart';
 
 class MeterReplacementBloc {
   final BuildContext context;
@@ -29,10 +29,7 @@ class MeterReplacementBloc {
   void init() {
     _danhbo = rawModel.danhBo;
     refresh = true;
-    Future.wait<void>([
-        onGetNhacThay(),
-        getLichSuThay(),
-      ]);
+    Future.wait<void>([onGetNhacThay(), getLichSuThay()]);
   }
 
   dispose() {
@@ -42,10 +39,7 @@ class MeterReplacementBloc {
 
   onRefresh({bool isRefresh = false}) async {
     if (refresh == true || isRefresh == true) {
-      await Future.wait<void>([
-        onGetNhacThay(),
-        getLichSuThay(),
-      ]);
+      await Future.wait<void>([onGetNhacThay(), getLichSuThay()]);
     }
 
     refresh = false;
@@ -73,17 +67,15 @@ class MeterReplacementBloc {
     streamLichSuThayModel.set(lichSuThayModel ?? LichSuThayResModel());
   }
 
-
-
   getLichSuThay() async {
     await Future.wait<void>([onGetLichSuThay(), onGetImage()]);
     onMapImage(imagesLichSuThay ?? []);
 
     streamLichSuThayModel.set(lichSuThayModel ?? LichSuThayResModel());
   }
-  
+
   onGetImage() async {
-    final url = NhabeApi.hinhBaoThay;
+    final url = '${Globals.config.nhaBeSever}${NhabeApi.hinhBaoThay}';
 
     imagesLichSuThay = await Utilities.fetchDataList<HinhAnhLichSuThayResModel>(
       url: url,
@@ -167,6 +159,4 @@ class MeterReplacementBloc {
       }
     }
   }
-
-
 }
