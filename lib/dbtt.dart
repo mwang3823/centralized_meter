@@ -1,5 +1,6 @@
 library dbtt;
 
+import 'package:dbtt/presentation/module/look_up_module/contact_detail_module/src/ui/reading_schedule_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -97,6 +98,12 @@ class DbttPlugin {
   static void pushOverviewReport(BuildContext context) {
     _assertInitialized();
     CustomNavigator.push(context, OverviewReportScreen());
+  }
+
+    /// Push đến màn hình báo cáo tổng quan
+  static void pushpushMeterSchedule(BuildContext context,String danhBo) {
+    _assertInitialized();
+    CustomNavigator.push(context, ReadingSchduleScreen(danhBo: danhBo));
   }
 
   /// Push đến màn hình tra cứu danh bạ
