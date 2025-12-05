@@ -95,7 +95,10 @@ class DbttPlugin {
 
     // Lưu tokens
     await Globals.prefs.setString(SharedPrefsKey.token, loginData.accessToken);
-    await Globals.prefs.setString(SharedPrefsKey.refresh_token, loginData.refreshToken);
+    await Globals.prefs.setString(
+      SharedPrefsKey.refresh_token,
+      loginData.refreshToken,
+    );
 
     if (deviceId != null) {
       await Globals.prefs.setString(SharedPrefsKey.device_id, deviceId);
@@ -126,9 +129,12 @@ class DbttPlugin {
   }
 
   /// Push đến màn hình chi tiết khách hàng
-  static void pushContactDetail(BuildContext context, CustomerListModel customer) {
+  static void pushContactDetail(BuildContext context, String danhBo) {
     _assertInitialized();
-    CustomNavigator.push(context, ContactDetailScreen(customer: customer));
+    CustomNavigator.push(
+      context,
+      ContactDetailScreen(customer: CustomerListModel(danhBo: danhBo)),
+    );
   }
 
   /// Tìm kiếm khách hàng
@@ -137,8 +143,9 @@ class DbttPlugin {
   /// [searchType] - Loại tìm kiếm: 'danhbo', 'hoten', 'lotrinh', 'diachi'
   /// [page] - Trang (mặc định: 1)
   ///
-  /// Returns [CustomerListResModel] - Danh sách kết quả tìm kiếm
-  static Future<CustomerListResModel> searchCustomer(
+  /// Returns 'dbtt' nếu chỉ tìm được 1 phần tử
+  /// Returns null nếu tìm được danh sách (nhiều hơn 1) hoặc rỗng
+  static Future<String?> searchCustomer(
     BuildContext context, {
     required String keyword,
     String searchType = 'danhbo',
@@ -147,9 +154,10 @@ class DbttPlugin {
     _assertInitialized();
 
     // Normalize keyword nếu là số
-    final normalizedKeyword = searchType == 'danhbo'
-        ? Utilities.normalizeNumber(keyword)
-        : keyword.removeAccents();
+    final normalizedKeyword =
+        searchType == 'danhbo'
+            ? Utilities.normalizeNumber(keyword)
+            : keyword.removeAccents();
 
     final CustomerListReqModel request = CustomerListReqModel(
       keyword: normalizedKeyword,
@@ -157,9 +165,18 @@ class DbttPlugin {
       page: page,
     );
 
-    final ResponseModel response = await Repository.customerList(context, request);
+    final ResponseModel response = await Repository.customerList(
+      context,
+      request,
+    );
 
-    return CustomerListResModel.fromJson(response.data);
+    final result = CustomerListResModel.fromJson(response.data);
+
+    // Trả về 'dbtt' nếu chỉ có 1 phần tử, null nếu nhiều hơn hoặc rỗng
+    if (result.items != null && result.items!.length == 1) {
+      return 'dbtt';
+    }
+    return null;
   }
 
   /// Push đến màn hình chi tiết khách hàng với tab cụ thể

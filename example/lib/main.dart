@@ -231,7 +231,7 @@ class _DemoPageState extends State<DemoPage> {
         searchType: _selectedSearchType,
       );
       setState(() {
-        _searchResults = result.items ?? [];
+        // _searchResults = result.items ?? [];
       });
     } catch (e) {
       if (mounted) {
@@ -392,7 +392,7 @@ class _DemoPageState extends State<DemoPage> {
                             ],
                           ),
                           onTap: () {
-                            DbttPlugin.pushContactDetail(context, customer);
+                            // DbttPlugin.pushContactDetail(context, customer);
                           },
                         ),
                       );
