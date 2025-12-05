@@ -41,9 +41,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     // Default values for testing
-    _serverController.text = 'https://ghithu.capnuocnhabe.vn:1829/mobile/';
-    _usernameController.text="test";
-    _passwordController.text="123456";
+    _serverController.text = 'h/';
+    _usernameController.text="";
+    _passwordController.text="";
 
   }
 
