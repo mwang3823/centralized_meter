@@ -28,12 +28,62 @@ class AppColors {
 }
 
 class AppFonts {
-  static const _montserrat = "Montserrat";
-  static const _roboto = "Roboto";
+  static const String _montserrat = "Montserrat";
+  static const String _roboto = "Roboto";
+  static const String _packageName = "dbtt";
 
-  /// Get font name with package prefix when running as plugin
-  static String get montserrat => '${Assets.packagePrefix}$_montserrat';
-  static String get roboto => '${Assets.packagePrefix}$_roboto';
+  /// Font family name - luôn là tên gốc
+  static String get montserrat => _montserrat;
+  static String get roboto => _roboto;
+
+  /// Package name để sử dụng với TextStyle(package: ...)
+  static String? get fontPackage => Assets.packagePrefix.isNotEmpty ? _packageName : null;
+
+  /// Helper để tạo TextStyle với font Montserrat
+  static TextStyle montserratStyle({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? height,
+    TextDecoration? decoration,
+  }) {
+    return TextStyle(
+      fontFamily: _montserrat,
+      package: fontPackage,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      fontStyle: fontStyle,
+      letterSpacing: letterSpacing,
+      height: height,
+      decoration: decoration,
+    );
+  }
+
+  /// Helper để tạo TextStyle với font Roboto
+  static TextStyle robotoStyle({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? height,
+    TextDecoration? decoration,
+  }) {
+    return TextStyle(
+      fontFamily: _roboto,
+      package: fontPackage,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      fontStyle: fontStyle,
+      letterSpacing: letterSpacing,
+      height: height,
+      decoration: decoration,
+    );
+  }
 }
 
 class AppSizes {
@@ -96,7 +146,8 @@ class AppTextStyle {
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
-        fontFamily: AppFonts.montserrat
+        fontFamily: AppFonts.montserrat,
+        package: AppFonts.fontPackage,
       );
 
   AppTextStyle copyWith({

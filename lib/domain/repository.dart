@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:dbtt/common/globals.dart';
+import 'package:dbtt/common/utilities.dart';
 import 'package:dbtt/data/models/request/cutoff_history_req_model.dart';
+import 'package:dbtt/data/models/request/login_req_model.dart';
 import 'package:dbtt/data/models/request/reopen_history_req_model.dart';
 import 'package:flutter/material.dart';
+import '../data/models/base/response_model.dart';
 import '../data/models/request/customer_detail_req_model.dart';
 import '../data/models/request/customer_list_req_model.dart';
 import '../data/models/request/comparison_req_model.dart';
@@ -13,6 +19,45 @@ import '../data/network/api/api.dart';
 import 'interaction/interaction.dart';
 
 class Repository {
+  static login(
+    BuildContext context,
+    LoginReqModel model, {
+    bool showError = true,
+  }) =>
+      Interaction(
+        context: context,
+        url: API.login(),
+        param: model.toJson(),
+        showError: showError,
+      ).post();
+
+  /// Login API không cần BuildContext (dùng cho init plugin)
+  static Future<ResponseModel> loginWithoutContext(LoginReqModel model) async {
+    try {
+      final url = Uri.parse('${API.server}${API.login()}');
+      final response = await Globals.client.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(model.toJson()),
+      );
+
+      Utilities.customPrint('Login url: $url');
+      Utilities.customPrint('Login code: ${response.statusCode}');
+      Utilities.customPrint('Login body: ${response.body}');
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return ResponseModel.fromJson(jsonDecode(response.body));
+      } else {
+        return ResponseModel(
+          errorMessage: 'Login failed with status: ${response.statusCode}',
+          errorCode: response.statusCode,
+        );
+      }
+    } catch (e) {
+      return ResponseModel(errorMessage: 'Login error: $e');
+    }
+  }
+
   static refreshToken(
     BuildContext context,
     RefreshTokenReqModel model, {
@@ -319,8 +364,6 @@ class Repository {
         showError: isShowError,
       ).post();
 
-
-      
   static reopenHistory(
     BuildContext context,
     ReopenHistoryReqModel model, {

@@ -105,8 +105,7 @@ class CustomSearchBoxState extends State<CustomSearchBox> {
                     isDense: true,
                     contentPadding: EdgeInsets.all(AppSizes.maxPadding),
                     hintText: LangKey.current.enter_to_search,
-                    labelStyle: TextStyle(
-                      fontFamily: AppFonts.montserrat,
+                    labelStyle: AppFonts.montserratStyle(
                       fontSize: AppTextSizes.body.value,
                       color: AppColors.hint,
                     ),
@@ -137,8 +136,7 @@ class CustomSearchBoxState extends State<CustomSearchBox> {
                               icon: Icon(Icons.clear, color: AppColors.grey),
                             ),
                   ),
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     fontSize: AppTextSizes.body.value,
                     color: Colors.black,
                   ),
@@ -310,8 +308,7 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
                   ),
                   hintText: LangKey.current.enter_to_search,
 
-                  labelStyle: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  labelStyle: AppFonts.montserratStyle(
                     fontSize: AppTextSizes.body.value,
                     color: AppColors.hint,
                   ),
@@ -345,8 +342,7 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
                             icon: Icon(Icons.clear, color: AppColors.grey),
                           ),
                 ),
-                style: TextStyle(
-                  fontFamily: AppFonts.montserrat,
+                style: AppFonts.montserratStyle(
                   fontSize: AppTextSizes.body.value,
                   color: Colors.black,
                 ),
@@ -367,10 +363,13 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
   }
 
   Widget _customItemOption(OptionModel model) {
+    final bool hasIcon = model.image != null || model.icon != null;
+    const double iconSize = 16.0; // Kích thước cố định cho icon
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: AppSizes.minPadding,
-        vertical: AppSizes.minPadding,
+        vertical: AppSizes.minPadding / 2,
       ),
       decoration: BoxDecoration(
         color: model.isSelected == true ? model.backgroundColor : null,
@@ -378,29 +377,37 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          model.image != null
-              ? Image.asset(
-                Assets.resolve(model.image ?? Assets.imageEmpty),
-                width: AppSizes.icon,
-                fit: BoxFit.contain,
-                color:
-                    model.isSelected == true
-                        ? Colors.white
-                        : model.backgroundColor,
-              )
-              : model.icon != null
-              ? Icon(model.icon, color: model.iconColor, size: AppSizes.icon)
-              : Container(),
-
-          SizedBox(width: AppSizes.minPadding / 2),
+          if (hasIcon) ...[
+            SizedBox(
+              width: iconSize,
+              height: iconSize,
+              child: model.image != null
+                  ? Image.asset(
+                      Assets.resolve(model.image ?? Assets.imageEmpty),
+                      width: iconSize,
+                      height: iconSize,
+                      fit: BoxFit.contain,
+                      color: model.isSelected == true
+                          ? Colors.white
+                          : model.backgroundColor,
+                    )
+                  : Icon(
+                      model.icon,
+                      color: model.iconColor,
+                      size: iconSize,
+                    ),
+            ),
+            SizedBox(width: AppSizes.minPadding / 2),
+          ],
           CustomText(
             text: model.isSelected == true ? model.subValue : model.text ?? '',
             fontWeight: FontWeight.w500,
-            color:
-                model.isSelected == true
-                    ? AppColors.white
-                    : model.backgroundColor,
+            fontSize: AppTextSizes.subBody,
+            color: model.isSelected == true
+                ? AppColors.white
+                : model.backgroundColor,
           ),
         ],
       ),

@@ -39,12 +39,12 @@ class CustomText extends StatelessWidget {
             fontSize: (fontSize ?? AppTextSizes.body).value + fontSizeIncrement,
             fontWeight: fontWeight ?? FontWeight.normal,
             color: color ?? AppColors.black,
-            fontFamily:  AppFonts.montserrat,
+            fontFamily: AppFonts.montserrat,
+            package: AppFonts.fontPackage,
           ),
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,
-      
     );
   }
 }
@@ -86,9 +86,9 @@ class CustomAutoSizeText extends StatelessWidget {
         fontWeight: fontWeight ?? FontWeight.normal,
         color: color ?? AppColors.black,
         fontFamily: AppFonts.montserrat,
+        package: AppFonts.fontPackage,
       ),
       textAlign: textAlign,
-
       maxLines: maxLines,
       overflow: overflow,
       minFontSize: minFontSize ?? 1,

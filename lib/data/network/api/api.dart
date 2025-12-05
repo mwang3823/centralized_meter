@@ -5,6 +5,7 @@ class API {
   static int get successCode => 0;
 
   // Device
+  static login() => "api/auth/sign-in";
   static checkVersion() => "api/device/check-version";
 
   // Auth

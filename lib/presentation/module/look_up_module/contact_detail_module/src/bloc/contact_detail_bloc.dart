@@ -234,7 +234,13 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
       // ),
     ];
 
-    tabController = TabController(length: tabs.length, vsync: this);
+    // Khởi tạo TabController với initialIndex nếu có
+    final initialIndex = widget.initialTabIndex ?? 0;
+    tabController = TabController(
+      length: tabs.length,
+      vsync: this,
+      initialIndex: initialIndex.clamp(0, tabs.length - 1),
+    );
 
     final loadedTabs = <String>{};
 

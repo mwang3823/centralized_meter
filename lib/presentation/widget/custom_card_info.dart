@@ -30,12 +30,13 @@ Widget buildInfoCard({
   Color backgroundColor = Colors.blue,
   VoidCallback? onTap,
   double? width,
+  double? height,
 }) {
   return InkWell(
     onTap: onTap,
     borderRadius: BorderRadius.circular(AppSizes.minBorderRadius),
     child: Container(
-      height: 120,
+      height: height ?? 120,
       width: width,
       padding: EdgeInsets.all(AppSizes.minPadding),
       decoration: BoxDecoration(
@@ -43,59 +44,54 @@ Widget buildInfoCard({
         borderRadius: BorderRadius.circular(AppSizes.minBorderRadius),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(AppSizes.minPadding / 2),
-                  width: AppSizes.icon * 1.5,
-                  height: AppSizes.icon * 1.5,
-                  decoration: BoxDecoration(
-                    color: Colors.black26,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(Assets.resolve(imagePath)),
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(AppSizes.minPadding / 2),
+                width: AppSizes.icon * 1.5,
+                height: AppSizes.icon * 1.5,
+                decoration: BoxDecoration(
+                  color: Colors.black26,
+                  shape: BoxShape.circle,
                 ),
-                const SizedBox(width: AppSizes.minPadding / 2),
-                Expanded(
-                  child: CustomText(
-                    text: title,
-                    maxLines: 2,
-                    fontSize: AppTextSizes.body,
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Image.asset(Assets.resolve(imagePath)),
+              ),
+              const SizedBox(width: AppSizes.minPadding / 2),
+              Expanded(
+                child: CustomText(
+                  text: title,
+                  maxLines: 2,
+                  fontSize: AppTextSizes.subBody,
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTooltipText(
-                  text: value,
-                  textStyle: TextStyle(
-                    color: backgroundColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  backgroundColor: Colors.white, 
-                  fontSize: AppTextSizes.subTitle.value,
-                  fontWeight: FontWeight.bold,
-                  maxLines: 1,
-                ),
-                CustomText(
-                  text: subtitle,
-                  textAlign: TextAlign.left,
-                  color: Colors.white,
-                  fontSize: AppTextSizes.tiny,
-                ),
-              ],
+          const Spacer(),
+          // Value and subtitle
+          CustomTooltipText(
+            text: value,
+            textStyle: AppFonts.montserratStyle(
+              color: backgroundColor,
+              fontWeight: FontWeight.bold,
             ),
+            backgroundColor: Colors.white,
+            fontSize: AppTextSizes.subBody.value,
+            fontWeight: FontWeight.bold,
+            maxLines: 2,
+          ),
+          const SizedBox(height: 2),
+          CustomText(
+            text: subtitle,
+            textAlign: TextAlign.left,
+            color: Colors.white,
+            fontSize: AppTextSizes.tiny,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

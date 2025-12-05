@@ -105,14 +105,12 @@ class _OverviewSectionScreenState extends State<OverviewSectionScreen>
                     value: year,
                     prefixText: '${LangKey.current.year} : ',
                     onChanged: (p0) => widget.bloc.onYear(p0),
-                    valueStyle: TextStyle(
-                      fontFamily: AppFonts.montserrat,
+                    valueStyle: AppFonts.montserratStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
                     ),
                     showBorder: true,
-                    prefixStyle: TextStyle(
-                      fontFamily: AppFonts.montserrat,
+                    prefixStyle: AppFonts.montserratStyle(
                       color: AppColors.black,
                     ),
                   ),

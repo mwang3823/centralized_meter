@@ -12,7 +12,6 @@ import '../../../../../../../../../../data/models/response/consumption_index_res
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
 import '../../../../../../../../../../data/models/response/lat_long_res_model.dart';
 import '../../module/detail_module/ui/consumption_index_detail_screen.dart';
-import '../../module/filter_module/ui/history_payment_filter_screen.dart';
 
 
 class ConsumptionIndexBloc {
@@ -53,25 +52,6 @@ class ConsumptionIndexBloc {
         detail: streamCustomerDetail?.value,
       ),
     );
-  }
-
-  onFilter() async {
-    ConsumptionListReqModel? event = await CustomDialog.showBottom(
-      context,
-      HistoryPaymentFilterScreen(
-        consumtionModel: consumptionIndexFilterModel,
-        isConsum: true,
-      ),
-    );
-    if (event != null) {
-      consumptionIndexFilterModel = event;
-      final request = event.copyWith(
-        tuKy: Utilities.extractNumberFromString(event.tuKy ?? '1'),
-        denKy: Utilities.extractNumberFromString(event.denKy ?? '1'),
-      );
-      consumptionIndexFilterModel = request;
-    }
-    await onGetConsumptionIndex();
   }
 
   onGetConsumptionIndex() async {

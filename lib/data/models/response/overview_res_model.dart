@@ -13,10 +13,14 @@ class TongQuanModel {
 
   factory TongQuanModel.fromJson(Map<String, dynamic> json) {
     return TongQuanModel(
-      tongSoKhachHang: double.tryParse(json['tong_so_khach_hang'].toString()) ?? 0,
-      tongSanLuong: double.tryParse(json['tong_san_luong'] ?? '0') ?? 0,
-      tongDoanhThu: double.tryParse(json['tong_doanh_thu'] ?? '0') ?? 0,
-      giaBanBinhQuan: double.tryParse(json['gia_ban_binh_quan'] ?? '0') ?? 0,
+      tongSoKhachHang:
+          double.tryParse((json['tong_so_khach_hang'] ?? 0).toString()) ?? 0,
+      tongSanLuong:
+          double.tryParse((json['tong_san_luong'] ?? 0).toString()) ?? 0,
+      tongDoanhThu:
+          double.tryParse((json['tong_doanh_thu'] ?? 0).toString()) ?? 0,
+      giaBanBinhQuan:
+          double.tryParse((json['gia_ban_binh_quan'] ?? 0).toString()) ?? 0,
     );
   }
 

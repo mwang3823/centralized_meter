@@ -57,18 +57,20 @@ class CustomTabBar extends StatelessWidget {
         isScrollable: true,
         tabAlignment: TabAlignment.start,
         labelColor: AppColors.primary,
-        labelStyle: TextStyle(
+        labelStyle: AppFonts.montserratStyle(
           fontSize: AppTextSizes.body.value,
           fontWeight: FontWeight.bold,
-          fontFamily: AppFonts.montserrat,
         ),
         unselectedLabelColor: AppColors.hint,
-        unselectedLabelStyle: TextStyle(
+        unselectedLabelStyle: AppFonts.montserratStyle(
           fontSize: AppTextSizes.body.value,
-          fontFamily: AppFonts.montserrat,
         ),
         dividerColor: Colors.transparent,
         dividerHeight: 0,
+        indicator: UnderlineTabIndicator(borderSide: BorderSide(
+          color: AppColors.primary,
+          width: 1.5,
+        )),
         indicatorWeight: 1,
         indicatorSize: TabBarIndicatorSize.label,
         indicatorPadding: EdgeInsets.symmetric(

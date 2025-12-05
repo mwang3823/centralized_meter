@@ -7,9 +7,10 @@ import '../../../../look_up_module/contact_detail_module/src/bloc/contact_detail
 
 class ContactDetailScreen extends BaseView {
   final CustomerListModel? customer;
+  final int? initialTabIndex;
   final ContactDetailBloc _bloc = ContactDetailBloc();
 
-  ContactDetailScreen({this.customer});
+  ContactDetailScreen({this.customer, this.initialTabIndex});
   @override
   ContactDetailBloc createState() => _bloc;
 

@@ -357,7 +357,6 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
               child: InkWell(
                 onTap: () {
                   if (widget.onTapSchedule != null) widget.onTapSchedule!();
-                  if (widget.onTapSchedule != null) widget.onTapSchedule!();
                 },
                 child: Row(
                   children: [
@@ -371,7 +370,7 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
                         horizontal: AppSizes.minPadding / 2,
                       ),
                       child: Image.asset(
-                        Assets.resolve(Assets.imageBind) ,
+                        Assets.resolve(Assets.imageBind),
                         width: AppSizes.icon,
                       ),
                     ),
@@ -422,10 +421,10 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
                 content: CustomAppFormat.formatValue(model?.kyHuyDanhbo),
               ),
             if (model?.soQuyetDinhHuy?.isNotEmpty == true)
-            CustomColumnInformation(
-              title: LangKey.current.cancellation_decision_number,
-              content: CustomAppFormat.formatValue(model?.soQuyetDinhHuy),
-            ),
+              CustomColumnInformation(
+                title: LangKey.current.cancellation_decision_number,
+                content: CustomAppFormat.formatValue(model?.soQuyetDinhHuy),
+              ),
           ],
         ),
         CustomColumn(

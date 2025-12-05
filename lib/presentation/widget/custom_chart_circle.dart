@@ -101,13 +101,16 @@ class InvoiceSummaryCard extends StatelessWidget {
               Text(
                 _formatInt(totalInvoices),
                 maxLines: 2,
-                style: const TextStyle(
+                style: AppFonts.montserratStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              const Text('Hóa đơn', style: TextStyle(fontSize: 16)),
+              Text(
+                'Hóa đơn',
+                style: AppFonts.montserratStyle(fontSize: 16),
+              ),
             ],
           ),
         ),
@@ -173,18 +176,18 @@ class InvoiceSummaryCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${item.name}: ',
-                          style: TextStyle(
+                          style: AppFonts.montserratStyle(
                             fontSize: AppTextSizes.subBody.value,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black, // màu cho tên
+                            color: Colors.black,
                           ),
                         ),
                         TextSpan(
                           text: '${_formatInt(item.value ?? 0)} HĐ',
-                          style: TextStyle(
+                          style: AppFonts.montserratStyle(
                             fontSize: AppTextSizes.subBody.value,
                             fontWeight: FontWeight.w600,
-                            color: item.color, // màu theo color của item
+                            color: item.color,
                           ),
                         ),
                       ],

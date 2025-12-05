@@ -54,18 +54,16 @@ class CustomColumnInformation extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: title,
-            style: TextStyle(
+            style: AppFonts.montserratStyle(
               fontSize: AppTextSizes.subBody.value,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
-              fontFamily: AppFonts.montserrat,
             ),
             children: [
               if (isRequire)
                 TextSpan(
                   text: "*",
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     fontSize: AppTextSizes.subBody.value,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
@@ -121,8 +119,7 @@ class CustomColumnInformationCustom extends StatelessWidget {
                 text: title,
                 style:
                     titleTextStyle ??
-                    TextStyle(
-                      fontFamily: AppFonts.montserrat,
+                    AppFonts.montserratStyle(
                       fontSize: AppTextSizes.subBody.value,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,
@@ -131,8 +128,7 @@ class CustomColumnInformationCustom extends StatelessWidget {
                   if (isRequire)
                     TextSpan(
                       text: "*",
-                      style: TextStyle(
-                        fontFamily: AppFonts.montserrat,
+                      style: AppFonts.montserratStyle(
                         fontSize: AppTextSizes.subBody.value,
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
@@ -189,8 +185,7 @@ class CustomColumnWidget extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: title,
-            style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+            style: AppFonts.montserratStyle(
               fontSize: titleSize.value,
               fontWeight: FontWeight.bold,
             ),
@@ -198,8 +193,7 @@ class CustomColumnWidget extends StatelessWidget {
               if (isRequire)
                 TextSpan(
                   text: "*",
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     fontSize: titleSize.value,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
@@ -242,8 +236,7 @@ class CustomColumnDocument extends StatelessWidget {
           Text.rich(
             TextSpan(
               text: title,
-              style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+              style: AppFonts.montserratStyle(
                 fontSize: AppTextSizes.subBody.value,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,

@@ -25,9 +25,8 @@ class CustomTextSpanRow extends StatelessWidget {
             text: text ?? '',
             style:
                 textStyle ??
-                TextStyle(
+                AppFonts.montserratStyle(
                   fontSize: AppTextSizes.subBody.value,
-                  fontFamily: AppFonts.montserrat,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
                 ),

@@ -55,16 +55,14 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
               children: [
                 TextSpan(
                   text: "${LangKey.current.month} ${data.category} ",
-                  style: TextStyle(
+                  style: AppFonts.montserratStyle(
                     color: Colors.white,
                     fontSize: 12,
-                    fontFamily: AppFonts.montserrat,
                   ),
                 ),
                 TextSpan(
                   text: '(${series.name})',
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -72,8 +70,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
                 ),
                 TextSpan(
                   text: ": ${(point.y as num).toStringAsFixed(3)}",
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     color: Colors.white,
                     fontSize: 12,
                   ),
@@ -120,7 +117,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
             child: CustomText(
               text: tabs[index],
               color: isSelected ? AppColors.white : AppColors.black,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              fontWeight: isSelected ? FontWeight.w600 : null,
             ),
           ),
         ),
@@ -178,8 +175,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
           plotAreaBackgroundColor: Colors.transparent,
 
           primaryXAxis: CategoryAxis(
-            labelStyle: TextStyle(
-              fontFamily: AppFonts.montserrat,
+            labelStyle: AppFonts.montserratStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
@@ -189,8 +185,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
           ),
 
           primaryYAxis: NumericAxis(
-            labelStyle: TextStyle(
-              fontFamily: AppFonts.montserrat,
+            labelStyle: AppFonts.montserratStyle(
               color: Colors.black,
             ),
             isVisible: false,
@@ -261,8 +256,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
                       if (value == maxValue && (value ?? 0) > 0) {
                         return Text(
                           value?.toStringAsFixed(1) ?? '0',
-                          style: TextStyle(
-                            fontFamily: AppFonts.montserrat,
+                          style: AppFonts.montserratStyle(
                             color: series.color ?? Colors.black,
                             fontSize: AppTextSizes.tiny.value,
                             fontWeight: FontWeight.bold,
@@ -325,18 +319,17 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
                     children: [
                       TextSpan(
                         text: '${LangKey.current.year} $year: ',
-                        style: TextStyle(
-                          fontFamily: AppFonts.montserrat,
+                        style: AppFonts.montserratStyle(
                           fontWeight: FontWeight.w400,
                           color: AppColors.black,
                         ),
                       ),
                       TextSpan(
                         text: '$yearValue',
-                        style: TextStyle(
-                          fontFamily: AppFonts.montserrat,
+                        style: AppFonts.montserratStyle(
                           fontWeight: FontWeight.bold,
-                        ).copyWith(color: baseColor),
+                          color: baseColor,
+                        ),
                       ),
                     ],
                   ),
@@ -380,8 +373,7 @@ class _ComparisonChartWidgetState extends State<ComparisonChartWidget> {
                   ),
                   Text(
                     regions[index],
-                    style: TextStyle(
-                      fontFamily: AppFonts.montserrat,
+                    style: AppFonts.montserratStyle(
                       fontWeight:
                           isSelected ? FontWeight.bold : FontWeight.normal,
                       color: AppColors.primary,

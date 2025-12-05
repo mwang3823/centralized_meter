@@ -10,9 +10,10 @@ Widget buildStatCard({
   Color iconBackgroundColor = const Color(0xFFE6F0FF),
   Color iconColor = const Color(0xFF0052CC),
   Color valueColor = const Color(0xFF0052CC),
+  double? height,
 }) {
   return Container(
-    height: 88,
+    height: height ?? 88,
     padding: const EdgeInsets.all(AppSizes.minPadding),
     decoration: BoxDecoration(
       color: Colors.white,
@@ -28,41 +29,44 @@ Widget buildStatCard({
           ),
           child: Image.asset(
             icon ?? '',
-            // color: iconColor,
-            height: AppSizes.icon,
+            height: AppSizes.icon*1.3,
           ),
         ),
         const SizedBox(width: AppSizes.minPadding),
-        Flexible(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: CustomAutoSizeText(
-                      text: value ?? '',
-                      fontSize: AppTextSizes.subTitle,
-                      maxLines: 1,
-                      
-                      color: valueColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 4, top: 4),
-                    child: Text(
-                      unit ?? '',
-                      style: TextStyle(
+              Flexible(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Flexible(
+                      child: CustomAutoSizeText(
+                        text: value ?? '',
+                        fontSize: AppTextSizes.subBody,
+                        maxLines: 1,
                         color: valueColor,
-                        fontSize: AppTextSizes.tiny.value,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                    if (unit != null && unit.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2),
+                        child: Text(
+                          unit,
+                          style: AppFonts.montserratStyle(
+                            color: valueColor,
+                            fontSize: AppTextSizes.tiny.value,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(height: 4.0),
               CustomAutoSizeText(
@@ -70,6 +74,7 @@ Widget buildStatCard({
                 fontSize: AppTextSizes.subBody,
                 maxLines: 2,
                 color: AppColors.black,
+                fontWeight: FontWeight.w500,
               ),
             ],
           ),

@@ -83,14 +83,14 @@ class OverviewReportBloc extends BaseBloc<OverviewReportScreen> {
   }) {
     cardInfo = [
       CardInfo(
-        imagePath: Assets.resolve(Assets.imageProfileUser),
+        imagePath: (Assets.imageProfileUser),
         title: LangKey.current.customer,
         value: CustomAppFormat.formatValue(customer),
         subtitle: LangKey.current.number_of_customers,
         backgroundColor: AppColors.primary,
       ),
       CardInfo(
-        imagePath: Assets.resolve(Assets.imageTag),
+        imagePath: (Assets.imageTag),
         title: LangKey.current.total_volume,
         subtitle:
             '${LangKey.current.total_volume1} ${DateTime.now().year} (${Constant.m3Text})',
@@ -98,14 +98,14 @@ class OverviewReportBloc extends BaseBloc<OverviewReportScreen> {
         backgroundColor: AppColors.blue,
       ),
       CardInfo(
-        imagePath: Assets.resolve(Assets.imageDrop),
+        imagePath: (Assets.imageDrop),
         title: LangKey.current.revenue,
         value: CustomAppFormat.formatValue(revenue),
         subtitle: '${LangKey.current.total_revenue} ${DateTime.now().year} VNĐ',
         backgroundColor: AppColors.green,
       ),
       CardInfo(
-        imagePath: Assets.resolve(Assets.imageChart),
+        imagePath: (Assets.imageChart),
         title: LangKey.current.average_price1,
         value: CustomAppFormat.formatValue(selling),
         subtitle: LangKey.current.average_price1,

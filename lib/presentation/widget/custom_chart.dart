@@ -59,8 +59,7 @@ class WorkChartWidget extends StatelessWidget {
                 ),
                 TextSpan(
                   text: model.value.toString(),
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+                  style: AppFonts.montserratStyle(
                     color: AppColors.primary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -106,9 +105,8 @@ class WorkChartWidget extends StatelessWidget {
                 if (!context.mounted) return const SizedBox.shrink();
                 return Text(
                   model.value.toStringAsFixed(1),
-                  style: TextStyle(
-                    fontFamily: AppFonts.montserrat,
-                    color: model.value!=0? model.color:AppColors.primary,
+                  style: AppFonts.montserratStyle(
+                    color: model.value != 0 ? model.color : AppColors.primary,
                     fontSize: AppTextSizes.tiny.value,
                     fontWeight: FontWeight.bold,
                   ),
@@ -120,8 +118,7 @@ class WorkChartWidget extends StatelessWidget {
         primaryXAxis: CategoryAxis(
           majorGridLines: const MajorGridLines(width: 0),
           majorTickLines: const MajorTickLines(width: 0),
-          labelStyle:  TextStyle(
-                    fontFamily: AppFonts.montserrat,
+          labelStyle: AppFonts.montserratStyle(
             color: Colors.black,
             fontSize: 10,
             fontWeight: FontWeight.bold,
@@ -136,8 +133,7 @@ class WorkChartWidget extends StatelessWidget {
           axisLine: const AxisLine(width: 0.0),
           majorGridLines: const MajorGridLines(color: AppColors.line),
           majorTickLines: const MajorTickLines(width: 0.0),
-          labelStyle:  TextStyle(
-                    fontFamily: AppFonts.montserrat,
+          labelStyle: AppFonts.montserratStyle(
             color: Colors.black,
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -201,8 +197,7 @@ class InvoiceChartWidget extends StatelessWidget {
             autoScrollingMode: AutoScrollingMode.start,
             autoScrollingDelta: 6,
             axisLine: AxisLine(color: AppColors.line, dashArray: dashArray),
-            labelStyle: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+            labelStyle: AppFonts.montserratStyle(
               color: AppColors.black,
               fontSize: AppTextSizes.subBody.value,
               fontWeight: FontWeight.bold,
@@ -215,8 +210,7 @@ class InvoiceChartWidget extends StatelessWidget {
           ),
           primaryYAxis: NumericAxis(
             axisLine: AxisLine(color: AppColors.line, dashArray: dashArray),
-            labelStyle: TextStyle(
-                    fontFamily: AppFonts.montserrat,
+            labelStyle: AppFonts.montserratStyle(
               color: AppColors.black,
               fontSize: AppTextSizes.subBody.value,
               fontWeight: FontWeight.bold,
@@ -267,8 +261,7 @@ class InvoiceChartWidget extends StatelessWidget {
               color: Colors.white,
               borderColor: AppColors.line,
               borderWidth: 1.0,
-              textStyle: TextStyle(color: Colors.black,
-                    fontFamily: AppFonts.montserrat,),
+              textStyle: AppFonts.montserratStyle(color: Colors.black),
             ),
           ),
         ),
@@ -373,7 +366,7 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
             radius: 6,
             color: Colors.white, //!isAbnormal ? abnormal : consumption,
             strokeWidth: 5,
-            strokeColor:!isAbnormal ? abnormal : consumption,// Colors.white,
+            strokeColor: !isAbnormal ? abnormal : consumption, // Colors.white,
           );
         },
       ),
@@ -393,7 +386,11 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
     );
 
     Widget bottomTitleWidgets(double value, TitleMeta meta) {
-      const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
+      final style = TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 12,
+        fontFamily: AppFonts.montserrat,
+      );
       String text = '';
       final int index = value.toInt();
       if (index >= 0 && index < widget.data!.length) {
@@ -410,7 +407,11 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
       if (value == meta.max) {
         return Container();
       }
-      const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 11);
+      final style = TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 11,
+        fontFamily: AppFonts.montserrat,
+      );
       return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 8,
@@ -478,11 +479,12 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
             final month = widget.data![idx].month ?? '';
             return LineTooltipItem(
               'T$month: ${s.y.toStringAsFixed(0)}',
-              const TextStyle(
+              TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
                 height: 1.5,
+                fontFamily: AppFonts.montserrat,
               ),
             );
           }).toList();
@@ -678,10 +680,11 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
                 child: Text(
                   titles[index],
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
+                    fontFamily: AppFonts.montserrat,
                   ),
                 ),
               ),

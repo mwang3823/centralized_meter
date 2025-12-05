@@ -67,10 +67,9 @@ class OverviewReportScreen extends BaseView {
                     bodyBuilder: () {
                       return CustomDropDownPlus(
                         paddingTop: context.height * 0.1,
-                        valueStyle: TextStyle(
+                        valueStyle: AppFonts.montserratStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
-                          fontFamily: AppFonts.montserrat,
                         ),
                         title:
                             '${LangKey.current.choose} ${LangKey.current.ward}',
