@@ -39,6 +39,7 @@ class DbttPlugin {
     bool enableLang = true,
     String? mapApiKey,
     String? server,
+    String? nhaBeSever
   }) async {
     if (_initialized) {
       return Globals.model!;
@@ -47,7 +48,7 @@ class DbttPlugin {
     Assets.packagePrefix = 'packages/dbtt/';
 
     await Config.getPreferences(
-      environment: 'DEV',
+      environment: 'PROD',
       digitizeKey: digitizeKey,
       displayPrint: displayPrint,
       enableLang: enableLang,
@@ -55,6 +56,7 @@ class DbttPlugin {
       mapApiKey: mapApiKey,
       releaseDate: null,
       server: server,
+      nhaBeSever: nhaBeSever
     );
 
     Globals.locale = locale;

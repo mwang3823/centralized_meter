@@ -8,7 +8,7 @@ import 'globals.dart';
 
 class Config {
   static Future<void> getPreferences({
-    String environment = 'DEV',
+    String environment = 'PROD',
     String? digitizeKey,
     bool displayPrint = false,
     bool enableLang = true,
