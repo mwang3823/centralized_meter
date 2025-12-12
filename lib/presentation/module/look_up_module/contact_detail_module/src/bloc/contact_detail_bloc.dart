@@ -256,6 +256,16 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
         }
       }
     });
+
+    // Gọi onRefresh cho tab ban đầu ngay sau khi khởi tạo
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final initialTabName = tabs[initialIndex.clamp(0, tabs.length - 1)].name;
+      final bloc = blocMap[initialTabName];
+      if (!loadedTabs.contains(initialTabName)) {
+        bloc?.onRefresh?.call();
+        loadedTabs.add(initialTabName ?? '');
+      }
+    });
   }
 
   onInitBlocs() {

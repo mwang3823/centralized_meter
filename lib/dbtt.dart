@@ -177,13 +177,13 @@ class DbttPlugin {
   ///   14: Digitize (Số hóa)
   static void pushContactDetailWithTab(
     BuildContext context,
-    CustomerListModel customer,
+     String danhBo,
     int tabIndex,
   ) {
     _assertInitialized();
     CustomNavigator.push(
       context,
-      ContactDetailScreen(customer: customer, initialTabIndex: tabIndex),
+      ContactDetailScreen(customer: CustomerListModel(danhBo: danhBo), initialTabIndex: tabIndex),
     );
   }
 

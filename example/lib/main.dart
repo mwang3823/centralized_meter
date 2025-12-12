@@ -281,19 +281,23 @@ class _DemoPageState extends State<DemoPage> {
               title: 'Navigation',
               children: [
                 _buildButton(
-                  'Bao cao tong quan',
+                  'Báo cáo tổng quan',
                   Icons.dashboard,
                   () => DbttPlugin.pushOverviewReport(context),
                 ),
                 _buildButton(
-                  'Tra cuu danh ba',
+                  'Tra cứu danh bạ',
                   Icons.search,
                   () => DbttPlugin.pushLookupScreen(context),
                 ),
                 _buildButton(
-                  'Bao cao so sanh',
+                  'Báo cáo so sánh',
                   Icons.compare_arrows,
                   () => DbttPlugin.pushComparisonReport(context),
+                ),
+                _buildButton(
+                  'Index 2',
+                  Icons.account_box_sharp,
                 ),
               ],
             ),
@@ -386,7 +390,7 @@ class _DemoPageState extends State<DemoPage> {
                             onSelected: (tabIndex) {
                               DbttPlugin.pushContactDetailWithTab(
                                 context,
-                                customer,
+                                '04011011171',
                                 tabIndex,
                               );
                             },
