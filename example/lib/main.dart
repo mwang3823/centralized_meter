@@ -298,6 +298,7 @@ class _DemoPageState extends State<DemoPage> {
                 _buildButton(
                   'Index 2',
                   Icons.account_box_sharp,
+                  () => DbttPlugin.pushContactDetailWithTab(context,'04011011171', 2 ),
                 ),
               ],
             ),
@@ -390,7 +391,6 @@ class _DemoPageState extends State<DemoPage> {
                             onSelected: (tabIndex) {
                               DbttPlugin.pushContactDetailWithTab(
                                 context,
-                                '04011011171',
                                 tabIndex,
                               );
                             },

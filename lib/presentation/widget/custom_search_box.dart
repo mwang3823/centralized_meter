@@ -154,6 +154,7 @@ class CustomSearchBoxState extends State<CustomSearchBox> {
   }
 }
 
+
 class CustomSearchOption extends StatefulWidget {
   final List<OptionModel>? optionModels;
   final FocusNode? focusNode;
@@ -187,11 +188,13 @@ class CustomSearchOption extends StatefulWidget {
 class _CustomSearchOptionState extends State<CustomSearchOption> {
   Timer? _debounce;
   String _lastText = "";
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     widget.controller?.addListener(_onTextChanged);
+    _updateSelectedIndex();
   }
 
   @override
@@ -199,6 +202,22 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
     _debounce?.cancel();
     widget.controller?.removeListener(_onTextChanged);
     super.dispose();
+  }
+
+  void _updateSelectedIndex() {
+    final options = widget.optionModels ?? [];
+    for (int i = 0; i < options.length; i++) {
+      if (options[i].isSelected == true) {
+        _selectedIndex = i;
+        break;
+      }
+    }
+  }
+
+  @override
+  void didUpdateWidget(CustomSearchOption oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateSelectedIndex();
   }
 
   void _onTextChanged() {
@@ -216,26 +235,11 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
 
   @override
   Widget build(BuildContext context) {
-    final items =
-        (widget.optionModels ?? [])
-            .map(
-              (e) => InkWell(
-                onTap: () {
-                  widget.onChangeOption!(e);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: _customItemOption(e),
-                ),
-              ),
-            )
-            .toList();
+    final options = widget.optionModels ?? [];
+    final selectedOption = options.isNotEmpty && _selectedIndex < options.length
+        ? options[_selectedIndex]
+        : OptionModel();
 
-    final isFewItems = items.length <= 5;
-    final selectedOption = (widget.optionModels ?? []).firstWhere(
-      (e) => e.isSelected == true,
-      orElse: () => OptionModel(),
-    );
     return Padding(
       padding:
           widget.padding ??
@@ -256,42 +260,74 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
           width: context.width,
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(top: AppSizes.minPadding),
-                child: SizedBox(
-                  height: 35,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minWidth: constraints.maxWidth,
-                          ),
-                          child: IntrinsicWidth(
-                            child: Align(
-                              alignment:
-                                  isFewItems
-                                      ? Alignment.center
-                                      : Alignment.centerLeft,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: items,
-                              ),
+              if (options.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: AppSizes.minPadding,
+                    left: AppSizes.minPadding,
+                    right: AppSizes.minPadding,
+                  ),
+                  child: LiquidGlassTabBar(
+                    items: options
+                        .map((e) => LiquidGlassTabItem(
+                              id: e.id,
+                              title: e.isSelected == true ? e.subValue : e.text,
+                              iconAsset: Assets.resolve(e.image??''),
+                              iconData: e.icon,
+                            ))
+                        .toList(),
+                    selectedIndex: _selectedIndex,
+                    indicatorColor: selectedOption.backgroundColor ?? AppColors.primary,
+                    onTabChanged: (index, item) {
+                      setState(() => _selectedIndex = index);
+                      if (widget.onChangeOption != null) {
+                        widget.onChangeOption!(options[index]);
+                      }
+                    },
+                    itemBuilder: (item, isSelected) {
+                      final option = options.firstWhere(
+                        (e) => e.id == item.id,
+                        orElse: () => OptionModel(),
+                      );
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (item.iconAsset != null)
+                            Image.asset(
+                              item.iconAsset ?? Assets.imageEmpty,
+                              width: AppSizes.icon,
+                              fit: BoxFit.contain,
+                              color: isSelected
+                                  ? Colors.white
+                                  : option.backgroundColor,
+                            )
+                          else if (item.iconData != null)
+                            Icon(
+                              item.iconData,
+                              color: isSelected
+                                  ? Colors.white
+                                  : option.iconColor ?? option.backgroundColor,
+                              size: AppSizes.icon,
                             ),
+                          if (item.iconAsset != null || item.iconData != null)
+                            SizedBox(width: AppSizes.minPadding / 2),
+                          CustomText(
+                            text: item.title ?? '',
+                            fontWeight: FontWeight.w500,
+                            color: isSelected
+                                ? AppColors.white
+                                : option.backgroundColor ?? AppColors.black,
                           ),
-                        ),
+                        ],
                       );
                     },
                   ),
                 ),
-              ),
               Divider(color: AppColors.line),
               TextField(
                 key: ValueKey(selectedOption.value),
                 focusNode: widget.focusNode,
                 controller: widget.controller,
-
                 onSubmitted: (value) {
                   if (widget.submit != null) {
                     widget.submit!(value);
@@ -300,15 +336,10 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   isDense: true,
-                  contentPadding: EdgeInsets.only(
-                    top: AppSizes.minPadding,
-                    bottom: AppSizes.maxPadding,
-                    left: AppSizes.maxPadding,
-                    right: AppSizes.minPadding,
-                  ),
+                  contentPadding: EdgeInsets.all(AppSizes.maxPadding),
                   hintText: LangKey.current.enter_to_search,
 
-                  labelStyle: AppFonts.montserratStyle(
+                  labelStyle: TextStyle(
                     fontSize: AppTextSizes.body.value,
                     color: AppColors.hint,
                   ),
@@ -342,7 +373,7 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
                             icon: Icon(Icons.clear, color: AppColors.grey),
                           ),
                 ),
-                style: AppFonts.montserratStyle(
+                style: TextStyle(
                   fontSize: AppTextSizes.body.value,
                   color: Colors.black,
                 ),
@@ -358,58 +389,6 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _customItemOption(OptionModel model) {
-    final bool hasIcon = model.image != null || model.icon != null;
-    const double iconSize = 16.0; // Kích thước cố định cho icon
-
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppSizes.minPadding,
-        vertical: AppSizes.minPadding / 2,
-      ),
-      decoration: BoxDecoration(
-        color: model.isSelected == true ? model.backgroundColor : null,
-        borderRadius: BorderRadius.circular(AppSizes.minBorderRadius),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (hasIcon) ...[
-            SizedBox(
-              width: iconSize,
-              height: iconSize,
-              child: model.image != null
-                  ? Image.asset(
-                      Assets.resolve(model.image ?? Assets.imageEmpty),
-                      width: iconSize,
-                      height: iconSize,
-                      fit: BoxFit.contain,
-                      color: model.isSelected == true
-                          ? Colors.white
-                          : model.backgroundColor,
-                    )
-                  : Icon(
-                      model.icon,
-                      color: model.iconColor,
-                      size: iconSize,
-                    ),
-            ),
-            SizedBox(width: AppSizes.minPadding / 2),
-          ],
-          CustomText(
-            text: model.isSelected == true ? model.subValue : model.text ?? '',
-            fontWeight: FontWeight.w500,
-            fontSize: AppTextSizes.body,
-            color: model.isSelected == true
-                ? AppColors.white
-                : model.backgroundColor,
-          ),
-        ],
       ),
     );
   }
