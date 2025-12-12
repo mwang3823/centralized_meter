@@ -300,6 +300,26 @@ class _DemoPageState extends State<DemoPage> {
                   Icons.account_box_sharp,
                   () => DbttPlugin.pushContactDetailWithTab(context,'04011011171', 2 ),
                 ),
+                _buildButton(
+                  'danh_bo',
+                  Icons.account_box_sharp,
+                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'danhbo')),
+                ),
+                _buildButton(
+                  'hoten',
+                  Icons.account_box_sharp,
+                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'hoten')),
+                ),
+                _buildButton(
+                  'lotrinh',
+                  Icons.account_box_sharp,
+                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'lotrinh')),
+                ),
+                _buildButton(
+                  'diachi',
+                  Icons.account_box_sharp,
+                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'diachi')),
+                ),
               ],
             ),
             const SizedBox(height: 24),
@@ -391,6 +411,7 @@ class _DemoPageState extends State<DemoPage> {
                             onSelected: (tabIndex) {
                               DbttPlugin.pushContactDetailWithTab(
                                 context,
+                                '04011011171',
                                 tabIndex,
                               );
                             },

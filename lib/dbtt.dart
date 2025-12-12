@@ -12,6 +12,7 @@ import 'common/utilities.dart';
 import 'common/utils/custom_navigator.dart';
 import 'common/utils/extension.dart';
 import 'data/local/shared_prefs/shared_prefs_key.dart';
+import 'data/models/base/option_model.dart';
 import 'data/models/base/response_model.dart';
 import 'data/models/request/customer_list_req_model.dart';
 import 'data/models/request/login_req_model.dart';
@@ -25,6 +26,7 @@ import 'presentation/module/overview_report_module.dart/ui/overview_report_scree
 
 export 'data/models/response/login_res_model.dart';
 export 'data/models/response/customer_list_res_model.dart';
+export 'data/models/base/option_model.dart';
 export 'common/localization/l10n.dart' show LangKey, AppLocalizationDelegate;
 
 class DbttPlugin {
@@ -110,6 +112,14 @@ class DbttPlugin {
   static void pushLookupScreen(BuildContext context) {
     _assertInitialized();
     CustomNavigator.push(context, LookupScreen());
+  }
+
+  /// Push đến màn hình tra cứu danh bạ với option được chỉ định
+  /// [option] - OptionModel chứa thông tin tab cần chọn (match theo id)
+  /// Các id có sẵn: 'danhbo', 'hoten', 'lotrinh', 'diachi'
+  static void pushLookupScreenWithOption(BuildContext context, OptionModel option) {
+    _assertInitialized();
+    CustomNavigator.push(context, LookupScreen(initialOption: option));
   }
 
   /// Push đến màn hình báo cáo so sánh

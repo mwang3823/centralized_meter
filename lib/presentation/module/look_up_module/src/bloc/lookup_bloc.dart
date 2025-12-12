@@ -14,6 +14,10 @@ import '../../../../../../../../../domain/repository.dart' show Repository;
 import '../ui/lookup_screen.dart';
 
 class LookupBloc extends BaseBloc<LookupScreen> {
+  final OptionModel? initialOption;
+
+  LookupBloc({this.initialOption});
+
   int page = 1;
 
   final FocusNode focusSearch = FocusNode();
@@ -32,16 +36,35 @@ class LookupBloc extends BaseBloc<LookupScreen> {
   void onInit() {
     // TODO: implement onInit
     Globals.customerFilterType.forEach((element) => element.isSelected = false);
-    Globals.customerFilterType.first.isSelected = true;
-    optionModels = Globals.customerFilterType;
-    optionModel = Globals.customerFilterType.first;
 
+    // Nếu có initialOption, tìm và chọn tab tương ứng
+    if (initialOption != null) {
+      final matchIndex = Globals.customerFilterType.indexWhere(
+        (e) => e.id == initialOption!.id,
+      );
+      if (matchIndex != -1) {
+        Globals.customerFilterType[matchIndex].isSelected = true;
+        optionModel = Globals.customerFilterType[matchIndex];
+      } else {
+        Globals.customerFilterType.first.isSelected = true;
+        optionModel = Globals.customerFilterType.first;
+      }
+    } else {
+      Globals.customerFilterType.first.isSelected = true;
+      optionModel = Globals.customerFilterType.first;
+    }
+
+    optionModels = Globals.customerFilterType;
     streamOptionModels.set(optionModels);
   }
 
   @override
   void onReady() {
     onGetCustomerList();
+    // Auto focus vào ô search nếu có initialOption
+    if (initialOption != null) {
+      focusSearch.requestFocus();
+    }
     // TODO: implement onReady
   }
 

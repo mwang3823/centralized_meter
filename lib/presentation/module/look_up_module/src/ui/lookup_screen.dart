@@ -4,12 +4,17 @@ import 'package:dbtt/common/localization/l10n.dart';
 import 'package:dbtt/common/theme.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 import '../../../../../../../../../common/app_format.dart';
+import '../../../../../../../../../data/models/base/option_model.dart';
 import '../../../../../../../../../data/models/response/customer_list_res_model.dart';
 import '../../../../widget/custom_texpan_row.dart';
 import '../bloc/lookup_bloc.dart';
 
 class LookupScreen extends BaseView {
-  final LookupBloc _bloc = LookupBloc();
+  final OptionModel? initialOption;
+
+  LookupScreen({this.initialOption});
+
+  late final LookupBloc _bloc = LookupBloc(initialOption: initialOption);
   @override
   LookupBloc createState() => _bloc;
 
