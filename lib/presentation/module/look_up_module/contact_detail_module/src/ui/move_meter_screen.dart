@@ -50,7 +50,7 @@ class _MoveMeterScreenState extends State<MoveMeterScreen> {
               bodyBuilder:
                   () => CustomListView(
                     physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+                    // shrinkWrap: true,
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSizes.maxPadding,
                     ),
