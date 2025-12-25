@@ -54,47 +54,12 @@ class _FluctuationMeterScreenState extends State<FluctuationMeterScreen> {
         separatorPadding: AppSizes.maxPadding,
         children: [
           CustomColumn(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomColumnInformation(
-                title: LangKey.current.receipt_number,
-                content: CustomAppFormat.formatValue(model.sobn),
-              ),
-              CustomColumnInformation(
-                title: LangKey.current.price_list,
-                content: CustomAppFormat.formatValue(model.giabieu),
-              ),
-            ],
-          ),
-          CustomColumn(
-            children: [
-              CustomColumnInformation(
-                title: LangKey.current.full_name1,
-                content: CustomAppFormat.formatValue(model.hoten),
-              ),
-              CustomColumnInformation(
-                title: LangKey.current.phone,
-                content: CustomAppFormat.formatValue(model.sodt),
-              ),
-            ],
-          ),
-          CustomColumn(
-            children: [
-              CustomColumnInformation(
-                title: LangKey.current.address,
-                content: CustomAppFormat.formatValue(model.diachi1),
-              ),
-            ],
-          ),
-          CustomColumn(
-            children: [
-              CustomColumnInformation(
-                title: LangKey.current.ward,
-                content: CustomAppFormat.formatValue(model.maphuong),
-              ),
-              CustomColumnInformation(
-                title: LangKey.current.district,
-                content: CustomAppFormat.formatValue(model.maquan),
+                title: LangKey.current.adjustment_type,
+                content: CustomAppFormat.formatValue(
+                  WaterServiceLookup.getValueName(model.loaidc ?? ''),
+                ),
               ),
             ],
           ),
@@ -111,32 +76,55 @@ class _FluctuationMeterScreenState extends State<FluctuationMeterScreen> {
             ],
           ),
           CustomColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomColumnInformation(
-                title: LangKey.current.adjustment_type,
-                content: CustomAppFormat.formatValue(
-                  WaterServiceLookup.getValueName(model.loaidc ?? ''),
-                ),
+                title: LangKey.current.effective_signature,
+                content: CustomAppFormat.formatValue(model.kyhieuluc),
+              ),
+              CustomColumnInformation(
+                title: LangKey.current.adjustment_batch,
+                content: CustomAppFormat.formatValue(model.dotdc),
+              ),
+            ],
+          ),
+
+          CustomColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomColumnInformation(
+                title: LangKey.current.total_population,
+                content: CustomAppFormat.formatValue(model.tongnk),
+              ),
+              CustomColumnInformation(
+                title: LangKey.current.population_count,
+                content: CustomAppFormat.formatValue(model.sonk),
               ),
             ],
           ),
           CustomColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              CustomColumnInformation(
+                title: LangKey.current.adjusted_quota,
+                content: CustomAppFormat.formatValue(model.dinhmucdc),
+              ),
+              CustomColumnInformation(
+                title: LangKey.current.adjusted_total_population,
+                content: CustomAppFormat.formatValue(model.tongnkdc),
+              ),
+            ],
+          ),
+          CustomColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomColumnInformation(
+                title: LangKey.current.adjusted_population_count,
+                content: CustomAppFormat.formatValue(model.sonkdc),
+              ),
               CustomColumnInformation(
                 title: LangKey.current.document,
                 content: CustomAppFormat.formatValue(model.giayto),
-              ),
-              CustomColumnInformation(
-                title: 'Email',
-                content: CustomAppFormat.formatValue(model.email),
-              ),
-            ],
-          ),
-          CustomColumn(
-            children: [
-              CustomColumnInformation(
-                title: LangKey.current.note,
-                content: CustomAppFormat.formatValue(model.ghichu),
               ),
             ],
           ),

@@ -46,6 +46,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "address": MessageLookupByLibrary.simpleMessage("Địa chỉ"),
     "address1": MessageLookupByLibrary.simpleMessage("ĐC"),
+    "adjusted_population_count": MessageLookupByLibrary.simpleMessage(
+      "Số NK ĐC",
+    ),
+    "adjusted_quota": MessageLookupByLibrary.simpleMessage("Định mức ĐC"),
+    "adjusted_total_population": MessageLookupByLibrary.simpleMessage(
+      "Tổng NK ĐC",
+    ),
+    "adjustment_batch": MessageLookupByLibrary.simpleMessage("Đợt ĐC"),
     "adjustment_date": MessageLookupByLibrary.simpleMessage("Ngày điều chỉnh"),
     "adjustment_type": MessageLookupByLibrary.simpleMessage("Loại điều chỉnh"),
     "after_handle": MessageLookupByLibrary.simpleMessage("Sau thực hiện"),
@@ -265,11 +273,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "district": MessageLookupByLibrary.simpleMessage("Quận"),
     "dm": MessageLookupByLibrary.simpleMessage("ĐM"),
     "document": MessageLookupByLibrary.simpleMessage("Giấy tờ"),
+    "document_type": MessageLookupByLibrary.simpleMessage("Loại giấy tờ"),
     "drainage_service_tax": MessageLookupByLibrary.simpleMessage(
       "Thuế dịch vụ thoát nước",
     ),
     "dvtn": MessageLookupByLibrary.simpleMessage("DVTN"),
     "e_invoice": MessageLookupByLibrary.simpleMessage("Hóa đơn điện tử"),
+    "effective_code": MessageLookupByLibrary.simpleMessage("Ký hiệu hiệu lực"),
     "effective_signature": MessageLookupByLibrary.simpleMessage("Ký hiệu lực"),
     "employee": MessageLookupByLibrary.simpleMessage("Nhân viên"),
     "employee_application": MessageLookupByLibrary.simpleMessage(
@@ -306,6 +316,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "expired_day": MessageLookupByLibrary.simpleMessage("Ngày hết hạn"),
     "fee_dvtn": MessageLookupByLibrary.simpleMessage("Phí DVTN"),
     "field_images": MessageLookupByLibrary.simpleMessage("Ảnh hiện trường"),
+    "file_number": MessageLookupByLibrary.simpleMessage("Số hồ sơ"),
     "filter": MessageLookupByLibrary.simpleMessage("Bộ lọc"),
     "first_time": MessageLookupByLibrary.simpleMessage("Lần thứ nhất"),
     "fluctuation": MessageLookupByLibrary.simpleMessage("Biến động"),
@@ -555,6 +566,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_number_kh": MessageLookupByLibrary.simpleMessage("Số điện thoại KH"),
     "photo": MessageLookupByLibrary.simpleMessage("Ảnh"),
     "photo_empty": MessageLookupByLibrary.simpleMessage("Không có hình ảnh"),
+    "population_count": MessageLookupByLibrary.simpleMessage("Số nhân khẩu"),
+    "population_type": MessageLookupByLibrary.simpleMessage("Loại nhân khẩu"),
     "position": MessageLookupByLibrary.simpleMessage("Chức vụ"),
     "preview": MessageLookupByLibrary.simpleMessage("Xem trước"),
     "previous_index": MessageLookupByLibrary.simpleMessage("Chỉ số cũ"),
@@ -748,6 +761,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "total_period_revenue": MessageLookupByLibrary.simpleMessage(
       "Tổng chuẩn thu kỳ",
     ),
+    "total_population": MessageLookupByLibrary.simpleMessage("Tổng nhân khẩu"),
     "total_revenue": MessageLookupByLibrary.simpleMessage("Tổng doanh thu"),
     "total_revenue1": MessageLookupByLibrary.simpleMessage("Doanh thu"),
     "total_volume": MessageLookupByLibrary.simpleMessage("Tổng sản lượng"),

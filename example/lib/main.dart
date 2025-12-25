@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      // Thêm localization delegates cho plugin
       localizationsDelegates: [
         DbttPlugin.localizationDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -44,13 +43,19 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _serverController = TextEditingController();
+  final _nhaBeServerController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
+
+
 
   @override
   void initState() {
     super.initState();
-    // Default values for testing
+    _serverController.text = server;
+    _nhaBeServerController.text = nhaBeServer;
+    _usernameController.text = username;
+    _passwordController.text = pass;
   }
 
   @override
@@ -58,13 +63,14 @@ class _LoginPageState extends State<LoginPage> {
     _usernameController.dispose();
     _passwordController.dispose();
     _serverController.dispose();
+    _nhaBeServerController.dispose();
     super.dispose();
   }
 
   Future<void> _login() async {
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
       setState(() {
-        _errorMessage = 'Vui long nhap username va password';
+        _errorMessage = 'Vui lòng nhập username và password';
       });
       return;
     }
@@ -75,16 +81,17 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      // Goi DbttPlugin.init() voi login
       final user = await DbttPlugin.init(
         username: _usernameController.text,
         password: _passwordController.text,
         server: _serverController.text,
+        nhaBeSever: _nhaBeServerController.text,
+        digitizeKey: digitizeKey,
+        mapApiKey: mapApiKey,
         displayPrint: true,
       );
 
       if (mounted) {
-        // Chuyen sang trang demo
         Navigator.of(
           context,
         ).push(MaterialPageRoute(builder: (_) => DemoPage(user: user)));
@@ -123,7 +130,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 32),
 
-            // Server URL
             TextField(
               controller: _serverController,
               decoration: const InputDecoration(
@@ -134,7 +140,16 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 16),
 
-            // Username
+            TextField(
+              controller: _nhaBeServerController,
+              decoration: const InputDecoration(
+                labelText: 'NhaBe Server URL',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.cloud_queue),
+              ),
+            ),
+            const SizedBox(height: 16),
+
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
@@ -145,7 +160,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 16),
 
-            // Password
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -157,7 +171,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 24),
 
-            // Error message
             if (_errorMessage != null) ...[
               Container(
                 padding: const EdgeInsets.all(12),
@@ -173,7 +186,6 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
             ],
 
-            // Login button
             SizedBox(
               height: 48,
               child: ElevatedButton(
@@ -191,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text('Dang nhap', style: TextStyle(fontSize: 16)),
+                    : const Text('Đăng nhập', style: TextStyle(fontSize: 16)),
               ),
             ),
           ],
@@ -213,13 +225,42 @@ class DemoPage extends StatefulWidget {
 
 class _DemoPageState extends State<DemoPage> {
   final _searchController = TextEditingController();
+  final _danhBoController = TextEditingController(text: '19041327381'); //DANHBO
   String _selectedSearchType = 'danhbo';
-  List<CustomerListModel> _searchResults = [];
+  String? _searchResult;
   bool _isSearching = false;
+
+  // Tab names for pushContactDetailWithTab
+  final List<Map<String, dynamic>> _tabOptions = [
+    {'index': 0, 'name': 'Tong quan', 'icon': Icons.dashboard},
+    {'index': 1, 'name': 'Tra cứu', 'icon': Icons.search},
+    {'index': 2, 'name': 'Báo cáo', 'icon': Icons.report},
+    {'index': 3, 'name': 'Đóng/Mở nước', 'icon': Icons.water},
+    {'index': 4, 'name': 'Lắp mới', 'icon': Icons.add_circle},
+    {'index': 5, 'name': 'Thay đồng hồ', 'icon': Icons.swap_horiz},
+    {'index': 6, 'name': 'Đổi đồng hồ', 'icon': Icons.swap_calls},
+    {'index': 7, 'name': 'Biến động', 'icon': Icons.trending_up},
+    {'index': 8, 'name': 'Hình ảnh', 'icon': Icons.image},
+    {'index': 9, 'name': 'Định mức', 'icon': Icons.people},
+    {'index': 10, 'name': 'Phiếu khiếu nại', 'icon': Icons.report_problem},
+    {'index': 11, 'name': 'Công văn', 'icon': Icons.description},
+    {'index': 12, 'name': 'Lịch sử cập nhật', 'icon': Icons.history},
+    {'index': 13, 'name': 'Tin nhắn', 'icon': Icons.message},
+    {'index': 14, 'name': 'Số hóa', 'icon': Icons.qr_code},
+  ];
+
+  // Option types for pushLookupScreenWithOption
+  final List<Map<String, dynamic>> _lookupOptions = [
+    {'id': 'danhbo', 'name': 'Danh bo', 'icon': Icons.numbers},
+    {'id': 'hoten', 'name': 'Ho ten', 'icon': Icons.person},
+    {'id': 'lotrinh', 'name': 'Lo trinh', 'icon': Icons.route},
+    {'id': 'diachi', 'name': 'Dia chi', 'icon': Icons.location_on},
+  ];
 
   @override
   void dispose() {
     _searchController.dispose();
+    _danhBoController.dispose();
     super.dispose();
   }
 
@@ -228,17 +269,30 @@ class _DemoPageState extends State<DemoPage> {
 
     setState(() {
       _isSearching = true;
+      _searchResult = null;
     });
 
     try {
-      DbttPlugin.searchCustomer(
+      final result = await DbttPlugin.searchCustomer(
         context,
         keyword: _searchController.text,
         searchType: _selectedSearchType,
       );
       setState(() {
-        // _searchResults = result.items ?? [];
+        _searchResult = result;
       });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              result != null
+                  ? 'Tim thay danh bo: $result'
+                  : 'Khong tim thay ket qua duy nhat',
+            ),
+            backgroundColor: result != null ? Colors.green : Colors.orange,
+          ),
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -265,10 +319,20 @@ class _DemoPageState extends State<DemoPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
+            icon: const Icon(Icons.info),
+            onPressed: () => _showPluginStatus(context),
+            tooltip: 'Trang thai Plugin',
+          ),
+          IconButton(
             icon: const Icon(Icons.person),
             onPressed: () => _showUserInfo(context),
+            tooltip: 'Thông tin User',
           ),
-          IconButton(icon: const Icon(Icons.logout), onPressed: _logout),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
+            tooltip: 'Đăng xuất',
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -276,70 +340,156 @@ class _DemoPageState extends State<DemoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Section 1: Navigation buttons
+            // Section 1: Input Danh Bo
             _buildSection(
-              title: 'Navigation',
+              title: 'Nhập Danh Bộ',
+              color: Colors.blue.shade50,
               children: [
-                _buildButton(
-                  'Báo cáo tổng quan',
-                  Icons.dashboard,
-                  () => DbttPlugin.pushOverviewReport(context),
-                ),
-                _buildButton(
-                  'Tra cứu danh bạ',
-                  Icons.search,
-                  () => DbttPlugin.pushLookupScreen(context),
-                ),
-                _buildButton(
-                  'Báo cáo so sánh',
-                  Icons.compare_arrows,
-                  () => DbttPlugin.pushComparisonReport(context),
-                ),
-                _buildButton(
-                  'Index 2',
-                  Icons.account_box_sharp,
-                  () => DbttPlugin.pushContactDetailWithTab(context,'04011011171', 2 ),
-                ),
-                _buildButton(
-                  'danh_bo',
-                  Icons.account_box_sharp,
-                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'danhbo')),
-                ),
-                _buildButton(
-                  'hoten',
-                  Icons.account_box_sharp,
-                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'hoten')),
-                ),
-                _buildButton(
-                  'lotrinh',
-                  Icons.account_box_sharp,
-                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'lotrinh')),
-                ),
-                _buildButton(
-                  'diachi',
-                  Icons.account_box_sharp,
-                  () => DbttPlugin.pushLookupScreenWithOption(context, OptionModel(id: 'diachi')),
+                TextField(
+                  controller: _danhBoController,
+                  decoration: const InputDecoration(
+                    labelText: 'Danh bo',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.numbers),
+                    hintText: 'VD: 04011010620',
+                  ),
+                  keyboardType: TextInputType.number,
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
-            // Section 2: Search customer
+            // Section 2: Navigation screens
             _buildSection(
-              title: 'Tim kiem khach hang',
+              title: 'Các màn hình chính',
+              color: Colors.green.shade50,
               children: [
-                // Search type dropdown
+                _buildButton(
+                  'pushOverviewReport - Báo cáo tổng quan',
+                  Icons.dashboard,
+                  () => DbttPlugin.pushOverviewReport(context),
+                  Colors.green,
+                ),
+                _buildButton(
+                  'pushLookupScreen - Tra cứu danh bạ',
+                  Icons.search,
+                  () => DbttPlugin.pushLookupScreen(context),
+                  Colors.blue,
+                ),
+                _buildButton(
+                  'pushComparisonReport - Báo cáo so sánh',
+                  Icons.compare_arrows,
+                  () => DbttPlugin.pushComparisonReport(context),
+                  Colors.purple,
+                ),
+                _buildButton(
+                  'pushContactDetail - Chi tiết khach hang',
+                  Icons.person_pin,
+                  () => DbttPlugin.pushContactDetail(
+                    context,
+                    _danhBoController.text,
+                  ),
+                  Colors.orange,
+                ),
+                _buildButton(
+                  'pushMeterSchedule - Lịch ghi chỉ số',
+                  Icons.schedule,
+                  () => DbttPlugin.pushpushMeterSchedule(
+                    context,
+                    _danhBoController.text,
+                  ),
+                  Colors.teal,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Section 3: Lookup with options
+            _buildSection(
+              title: 'pushLookupScreenWithOption - Tra cứu theo loại',
+              color: Colors.amber.shade50,
+              children: [
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _lookupOptions.map((option) {
+                    return ElevatedButton.icon(
+                      onPressed: () => DbttPlugin.pushLookupScreenWithOption(
+                        context,
+                        OptionModel(id: option['id']),
+                      ),
+                      icon: Icon(option['icon'], size: 18),
+                      label: Text(option['name']),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                        foregroundColor: Colors.black87,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Section 4: Contact detail with tabs
+            _buildSection(
+              title: 'pushContactDetailWithTab - Chi tiết theo Tab',
+              color: Colors.pink.shade50,
+              children: [
+                const Text(
+                  'Chọn tab để xem chi tiết khách hàng:',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _tabOptions.map((tab) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 32,
+                      child: ElevatedButton.icon(
+                        onPressed: () => DbttPlugin.pushContactDetailWithTab(
+                          context,
+                          _danhBoController.text,
+                          tab['index'],
+                        ),
+                        icon: Icon(tab['icon'], size: 16),
+                        label: Text(
+                          '${tab['index']}: ${tab['name']}',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 8,
+                          ),
+                          backgroundColor: Colors.pink.shade100,
+                          foregroundColor: Colors.black87,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Section 5: Search customer
+            _buildSection(
+              title: 'searchCustomer - Tìm kiếm khách hàng',
+              color: Colors.cyan.shade50,
+              children: [
                 DropdownButtonFormField<String>(
-                  initialValue: _selectedSearchType,
+                  value: _selectedSearchType,
                   decoration: const InputDecoration(
-                    labelText: 'Loai tim kiem',
+                    labelText: 'Loại tìm kiếm',
                     border: OutlineInputBorder(),
                   ),
                   items: const [
-                    DropdownMenuItem(value: 'danhbo', child: Text('Danh bo')),
-                    DropdownMenuItem(value: 'hoten', child: Text('Ho ten')),
-                    DropdownMenuItem(value: 'lotrinh', child: Text('Lo trinh')),
-                    DropdownMenuItem(value: 'diachi', child: Text('Dia chi')),
+                    DropdownMenuItem(value: 'danhbo', child: Text('Danh bộ')),
+                    DropdownMenuItem(value: 'hoten', child: Text('Họ tên')),
+                    DropdownMenuItem(value: 'lotrinh', child: Text('Lộ trình')),
+                    DropdownMenuItem(value: 'diachi', child: Text('Địa chỉ')),
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -348,15 +498,13 @@ class _DemoPageState extends State<DemoPage> {
                   },
                 ),
                 const SizedBox(height: 12),
-
-                // Search input
                 Row(
                   children: [
                     Expanded(
                       child: TextField(
                         controller: _searchController,
                         decoration: const InputDecoration(
-                          labelText: 'Tu khoa',
+                          labelText: 'Từ khóa tìm kiếm',
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.search),
                         ),
@@ -368,12 +516,17 @@ class _DemoPageState extends State<DemoPage> {
                       height: 56,
                       child: ElevatedButton(
                         onPressed: _isSearching ? null : _search,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.cyan,
+                          foregroundColor: Colors.white,
+                        ),
                         child: _isSearching
                             ? const SizedBox(
                                 width: 20,
                                 height: 20,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
+                                  color: Colors.white,
                                 ),
                               )
                             : const Text('Tim'),
@@ -381,71 +534,57 @@ class _DemoPageState extends State<DemoPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-
-                // Search results
-                if (_searchResults.isNotEmpty) ...[
-                  Text(
-                    'Ket qua: ${_searchResults.length} khach hang',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: _searchResults.length > 5
-                        ? 5
-                        : _searchResults.length,
-                    itemBuilder: (context, index) {
-                      final customer = _searchResults[index];
-                      return Card(
-                        child: ListTile(
-                          title: Text(customer.hoTen ?? 'N/A'),
-                          subtitle: Text(
-                            'Danh bo: ${customer.danhBo ?? 'N/A'}\n'
-                            'Dia chi: ${customer.diaChi ?? 'N/A'}',
-                          ),
-                          isThreeLine: true,
-                          trailing: PopupMenuButton<int>(
-                            icon: const Icon(Icons.more_vert),
-                            onSelected: (tabIndex) {
-                              DbttPlugin.pushContactDetailWithTab(
-                                context,
-                                '04011011171',
-                                tabIndex,
-                              );
-                            },
-                            itemBuilder: (context) => [
-                              const PopupMenuItem(
-                                value: 0,
-                                child: Text('Tong quan'),
-                              ),
-                              const PopupMenuItem(
-                                value: 1,
-                                child: Text('Lich su thanh toan'),
-                              ),
-                              const PopupMenuItem(
-                                value: 2,
-                                child: Text('Chi so tieu thu'),
-                              ),
-                              const PopupMenuItem(
-                                value: 3,
-                                child: Text('Dong/Mo nuoc'),
-                              ),
-                              const PopupMenuItem(
-                                value: 4,
-                                child: Text('Lap moi'),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            // DbttPlugin.pushContactDetail(context, customer);
-                          },
+                if (_searchResult != null) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.check_circle, color: Colors.green),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text('Danh bộ tìm thấy: $_searchResult'),
                         ),
-                      );
-                    },
+                        TextButton(
+                          onPressed: () {
+                            _danhBoController.text = _searchResult!;
+                            setState(() {});
+                          },
+                          child: const Text('Sử dụng'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Section 6: Plugin utilities
+            _buildSection(
+              title: 'Các hàm tiện ích',
+              color: Colors.grey.shade200,
+              children: [
+                _buildInfoRow(
+                  'isInitialized',
+                  DbttPlugin.isInitialized.toString(),
+                ),
+                _buildInfoRow(
+                  'currentLocale',
+                  DbttPlugin.currentLocale.toString(),
+                ),
+                _buildInfoRow('serverUrl', DbttPlugin.serverUrl ?? 'N/A'),
+                const SizedBox(height: 12),
+                _buildButton(
+                  'dispose - Đăng xuất và xóa dữ liệu',
+                  Icons.delete_forever,
+                  _logout,
+                  Colors.red,
+                ),
               ],
             ),
           ],
@@ -457,38 +596,114 @@ class _DemoPageState extends State<DemoPage> {
   Widget _buildSection({
     required String title,
     required List<Widget> children,
+    Color? color,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: color ?? Colors.grey.shade100,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           ...children,
         ],
       ),
     );
   }
 
-  Widget _buildButton(String label, IconData icon, VoidCallback onPressed) {
+  Widget _buildButton(
+    String label,
+    IconData icon,
+    VoidCallback onPressed,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon),
-        label: Text(label),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          alignment: Alignment.centerLeft,
+      child: Material(
+        color: color.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: color.computeLuminance() > 0.5 ? Colors.black : color,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: color.computeLuminance() > 0.5
+                          ? Colors.black
+                          : color,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Text('$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+          Expanded(child: Text(value, overflow: TextOverflow.ellipsis)),
+        ],
+      ),
+    );
+  }
+
+  void _showPluginStatus(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Trạng thái Plugin'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInfoRow('isInitialized', DbttPlugin.isInitialized.toString()),
+            _buildInfoRow(
+              'currentLocale',
+              DbttPlugin.currentLocale.languageCode,
+            ),
+            _buildInfoRow('serverUrl', DbttPlugin.serverUrl ?? 'N/A'),
+            const Divider(),
+            const Text(
+              'Supported Locales:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              DbttPlugin.supportedLocales.map((l) => l.languageCode).join(', '),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Đóng'),
+          ),
+        ],
       ),
     );
   }
@@ -498,24 +713,25 @@ class _DemoPageState extends State<DemoPage> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Thong tin User'),
+        title: const Text('Thông tin User (currentUser)'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Ho ten: ${user?.hoTen ?? "N/A"}'),
-            Text('Ma NV: ${user?.maNhanVien ?? "N/A"}'),
-            Text('Chuc vu: ${user?.chucVu ?? "N/A"}'),
-            Text('Phong ban: ${user?.phongBan ?? "N/A"}'),
-            const Divider(),
-            Text('Server: ${DbttPlugin.serverUrl ?? "N/A"}'),
-            Text('Locale: ${DbttPlugin.currentLocale.languageCode}'),
+            _buildInfoRow('Họ tên', user?.hoTen ?? 'N/A'),
+            _buildInfoRow('Mã NV', user?.maNhanVien ?? 'N/A'),
+            _buildInfoRow('Chức vụ', user?.chucVu ?? 'N/A'),
+            _buildInfoRow('Phòng ban', user?.phongBan ?? 'N/A'),
+            _buildInfoRow(
+              'Access Token',
+              '${user?.accessToken?.substring(0, 20)}...',
+            ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Dong'),
+            child: const Text('Đóng'),
           ),
         ],
       ),

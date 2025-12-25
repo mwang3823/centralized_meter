@@ -46,6 +46,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "address": MessageLookupByLibrary.simpleMessage("Address"),
     "address1": MessageLookupByLibrary.simpleMessage("AD"),
+    "adjusted_population_count": MessageLookupByLibrary.simpleMessage(
+      "Adjusted population count",
+    ),
+    "adjusted_quota": MessageLookupByLibrary.simpleMessage("Adjusted quota"),
+    "adjusted_total_population": MessageLookupByLibrary.simpleMessage(
+      "Adjusted total population",
+    ),
+    "adjustment_batch": MessageLookupByLibrary.simpleMessage(
+      "Adjustment batch",
+    ),
     "adjustment_date": MessageLookupByLibrary.simpleMessage("Adjustment Date"),
     "adjustment_type": MessageLookupByLibrary.simpleMessage("Adjustment Type"),
     "after_handle": MessageLookupByLibrary.simpleMessage("After handle"),
@@ -271,11 +281,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "district": MessageLookupByLibrary.simpleMessage("District"),
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "document": MessageLookupByLibrary.simpleMessage("Document"),
+    "document_type": MessageLookupByLibrary.simpleMessage("Document type"),
     "drainage_service_tax": MessageLookupByLibrary.simpleMessage(
       "Drainage service tax",
     ),
     "dvtn": MessageLookupByLibrary.simpleMessage("DVTN"),
     "e_invoice": MessageLookupByLibrary.simpleMessage("Electronic Invoice"),
+    "effective_code": MessageLookupByLibrary.simpleMessage("Effective code"),
     "effective_signature": MessageLookupByLibrary.simpleMessage(
       "Effective signature",
     ),
@@ -316,6 +328,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "expired_day": MessageLookupByLibrary.simpleMessage("Expired day"),
     "fee_dvtn": MessageLookupByLibrary.simpleMessage("DVTN fee"),
     "field_images": MessageLookupByLibrary.simpleMessage("Field Images"),
+    "file_number": MessageLookupByLibrary.simpleMessage("File number"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "first_time": MessageLookupByLibrary.simpleMessage("First time"),
     "fluctuation": MessageLookupByLibrary.simpleMessage("Fluctuation"),
@@ -577,6 +590,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "phone_number_kh": MessageLookupByLibrary.simpleMessage("Customer phone"),
     "photo": MessageLookupByLibrary.simpleMessage("Photo"),
     "photo_empty": MessageLookupByLibrary.simpleMessage("Photo empty"),
+    "population_count": MessageLookupByLibrary.simpleMessage(
+      "Population count",
+    ),
+    "population_type": MessageLookupByLibrary.simpleMessage("Population type"),
     "position": MessageLookupByLibrary.simpleMessage("Position"),
     "preview": MessageLookupByLibrary.simpleMessage("Preview"),
     "previous_index": MessageLookupByLibrary.simpleMessage("Previous Index"),
@@ -782,6 +799,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "total_period_revenue": MessageLookupByLibrary.simpleMessage(
       "Total period revenue",
+    ),
+    "total_population": MessageLookupByLibrary.simpleMessage(
+      "Total population",
     ),
     "total_revenue": MessageLookupByLibrary.simpleMessage("Total Revenue"),
     "total_revenue1": MessageLookupByLibrary.simpleMessage("Total Revenue"),

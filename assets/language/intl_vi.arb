@@ -532,5 +532,15 @@
   "new_installation": "Gắn mới",
   "meter_status": "Trạng thái đồng hồ",
   "setting": "Cài đặt",
-  "printer_type": "Loại máy in"
+  "printer_type": "Loại máy in",
+  "population_type": "Loại nhân khẩu",
+  "file_number": "Số hồ sơ",
+  "effective_code": "Ký hiệu hiệu lực",
+  "total_population": "Tổng nhân khẩu",
+  "population_count": "Số nhân khẩu",
+  "adjustment_batch": "Đợt ĐC",
+  "adjusted_quota": "Định mức ĐC",
+  "adjusted_total_population": "Tổng NK ĐC",
+  "adjusted_population_count": "Số NK ĐC",
+   "document_type": "Loại giấy tờ"
 }

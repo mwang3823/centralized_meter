@@ -532,5 +532,15 @@
   "new_installation": "New installation",
   "meter_status": "Meter status",
   "setting": "Setting",
-  "printer_type": "Printer type"
+  "printer_type": "Printer type",
+  "population_type": "Population type",
+  "file_number": "File number",
+  "effective_code": "Effective code",
+  "total_population": "Total population",
+  "population_count": "Population count",
+  "adjustment_batch": "Adjustment batch",
+  "adjusted_quota": "Adjusted quota",
+  "adjusted_total_population": "Adjusted total population",
+  "adjusted_population_count": "Adjusted population count",
+  "document_type": "Document type"
 }

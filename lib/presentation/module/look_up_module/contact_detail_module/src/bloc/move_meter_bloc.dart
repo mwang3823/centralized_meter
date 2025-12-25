@@ -14,17 +14,23 @@ class MoveMeterBloc {
   final CustomerListModel rawModel;
   MoveMeterBloc(this.context, this.rawModel);
 
+  bool refresh = true;
   DoiNangResModel? doiNangModel;
   final streamDoiNangModel = BehaviorSubject<DoiNangResModel?>();
 
-  init() {}
+  init() {
+    refresh = true;
+  }
 
   onDispose() {
     streamDoiNangModel.close();
   }
 
-  onRefresh() {
-    onGetDoiNang();
+  onRefresh({bool isRefresh = false}) {
+    if (refresh == true || isRefresh == true) {
+      onGetDoiNang();
+      refresh = false;
+    }
   }
 
   onGetDoiNang() async {

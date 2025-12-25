@@ -9,6 +9,7 @@ class NhanKhauModel {
   String? ghiChu;
   String? dinhMuc;
   String? ngayKetThuc;
+  String? loaiGiayTo;
 
   NhanKhauModel({
     this.hoTen,
@@ -21,6 +22,7 @@ class NhanKhauModel {
     this.ghiChu,
     this.dinhMuc,
     this.ngayKetThuc,
+    this.loaiGiayTo,
   });
 
   factory NhanKhauModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class NhanKhauModel {
       ghiChu: json['ghi_chu'],
       dinhMuc: (json['dinh_muc'] ?? '').toString(),
       ngayKetThuc: json['ngay_ket_thuc'].toString(),
+      loaiGiayTo: json['thong_tin'],
     );
   }
 
@@ -50,6 +53,7 @@ class NhanKhauModel {
     data['ghi_chu'] = this.ghiChu;
     data['dinh_muc'] = this.dinhMuc;
     data['ngay_ket_thuc'] = this.ngayKetThuc;
+    data['thong_tin'] = this.loaiGiayTo;
     return data;
   }
 }

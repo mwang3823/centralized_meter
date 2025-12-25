@@ -105,6 +105,11 @@ class _MoveMeterScreenState extends State<MoveMeterScreen> {
                 title: LangKey.current.angle_key,
                 content: CustomAppFormat.formatValue(doiNang?.chiKhoaGoc),
               ),
+
+              CustomColumnInformation(
+                title: LangKey.current.file_number,
+                content: CustomAppFormat.formatValue(doiNang?.soHoSo),
+              ),
             ],
           ),
           CustomColumn(

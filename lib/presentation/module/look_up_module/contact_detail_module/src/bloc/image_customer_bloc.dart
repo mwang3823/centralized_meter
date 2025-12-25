@@ -17,27 +17,44 @@ class ImageCustomerBloc {
   final CustomerListModel rawModel;
   ImageCustomerBloc(this.context, this.rawModel);
 
+  bool refresh = true;
+
   onRefresh({bool isRefresh = false}) {
-    onGetCustomerImage();
+    if (refresh == true || isRefresh == true) {
+      onGetCustomerImage();
+      refresh = false;
+    }
   }
 
   onDispose() {
     streamImage.close();
   }
 
-  init() {}
+  init() {
+    refresh = true;
+  }
 
   final streamImage = BehaviorSubject<List<ImageCustomerResModel>>();
 
   onGetCustomerImage() async {
-    String url = '${Globals.config.nhaBeSever}${NhabeApi.danhSachHinhAnhDanhBo}';
+    try {
+      final server = Globals.config.nhaBeSever;
+      if (server == null || server.isEmpty) {
+        streamImage.set([]);
+        return;
+      }
 
-    final images = await Utilities.fetchDataList<ImageCustomerResModel>(
-      url: url,
-      body: {"valstring1": rawModel.danhBo},
-      fromJson: (json) => ImageCustomerResModel.fromJson(json),
-    );
-    streamImage.set(images);
+      final url = '$server${NhabeApi.danhSachHinhAnhDanhBo}';
+
+      final images = await Utilities.fetchDataList<ImageCustomerResModel>(
+        url: url,
+        body: {"valstring1": rawModel.danhBo},
+        fromJson: (json) => ImageCustomerResModel.fromJson(json),
+      );
+      streamImage.set(images);
+    } catch (e) {
+      streamImage.set([]);
+    }
   }
 
   void showImageDialog(BuildContext context, String base64Str) {

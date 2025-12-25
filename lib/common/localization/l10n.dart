@@ -4113,6 +4113,96 @@ class LangKey {
       args: [],
     );
   }
+
+  /// `Loại nhân khẩu`
+  String get population_type {
+    return Intl.message(
+      'Loại nhân khẩu',
+      name: 'population_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Số hồ sơ`
+  String get file_number {
+    return Intl.message('Số hồ sơ', name: 'file_number', desc: '', args: []);
+  }
+
+  /// `Ký hiệu hiệu lực`
+  String get effective_code {
+    return Intl.message(
+      'Ký hiệu hiệu lực',
+      name: 'effective_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tổng nhân khẩu`
+  String get total_population {
+    return Intl.message(
+      'Tổng nhân khẩu',
+      name: 'total_population',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Số nhân khẩu`
+  String get population_count {
+    return Intl.message(
+      'Số nhân khẩu',
+      name: 'population_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Đợt ĐC`
+  String get adjustment_batch {
+    return Intl.message('Đợt ĐC', name: 'adjustment_batch', desc: '', args: []);
+  }
+
+  /// `Định mức ĐC`
+  String get adjusted_quota {
+    return Intl.message(
+      'Định mức ĐC',
+      name: 'adjusted_quota',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tổng NK ĐC`
+  String get adjusted_total_population {
+    return Intl.message(
+      'Tổng NK ĐC',
+      name: 'adjusted_total_population',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Số NK ĐC`
+  String get adjusted_population_count {
+    return Intl.message(
+      'Số NK ĐC',
+      name: 'adjusted_population_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loại giấy tờ`
+  String get document_type {
+    return Intl.message(
+      'Loại giấy tờ',
+      name: 'document_type',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LangKey> {

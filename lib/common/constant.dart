@@ -101,7 +101,7 @@ class WaterServiceLookup {
       case '20':
         return "Điều chỉnh hộ nghèo theo QĐ";
       default:
-        return "Mã không xác định";
+        return code;
     }
   }
 }

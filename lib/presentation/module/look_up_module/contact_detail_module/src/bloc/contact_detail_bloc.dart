@@ -69,7 +69,6 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   CustomerDetailResModel? customerDetail;
   ToaDoKhachHangResponse? toaDo;
 
-  CallLogBloc? callLogBloc;
   ComplaintRecordBloc? complaintRecordBloc;
   ConsumptionIndexBloc? consumptionIndexBloc;
   DigitizeBloc? digitizeBloc;
@@ -81,7 +80,6 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   UpdateHistoryBloc? updateHistoryBloc;
   MeterReplacementBloc? meterReplacementBloc;
   WaterOperationBloc? waterOperationBloc;
-  RequirementBloc? requestBloc;
   BadDebtBloc? badDebtBloc;
   MoveMeterBloc? moveMeterBloc;
   FluctuationMeterBloc? fluctuationMeterBloc;
@@ -320,6 +318,7 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
     newInstallationBloc!.init();
 
     moveMeterBloc = MoveMeterBloc(context, rawModel ?? CustomerListModel());
+    moveMeterBloc!.init();
 
     waterOperationBloc = WaterOperationBloc(
       context,
@@ -407,77 +406,6 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
     toaDo = model;
     streamToaDo.set(toaDo);
   }
-}
-
-class CallLogBloc {
-  // final BuildContext context;
-
-  // List<CallLogModel> callLogModel = [];
-  // final streamController = BehaviorSubject<List<CallLogModel>?>();
-
-  // CallLogBloc(this.context);
-
-  // void init() {}
-
-  // _initMockData() {
-  //   callLogModel = callLogList;
-  //   streamController.add(callLogModel);
-  // }
-
-  // onRefresh({bool isRefresh = false}) async {
-  //   if (isRefresh == true || callLogModel.isEmpty) {
-  //     await onGetCallLog();
-
-  //     // _initMockData();
-  //   }
-  // }
-
-  // dispose() {
-  //   streamController.close();
-  // }
-
-  // onGetCallLog() async {
-  //   final ResponseModel response = await Repository.lookupCustomerUpdateHistory(
-  //     context,
-  //     CustomerRequestModel(danhBo: ContactDetailBloc.rawModel?.danhBo),
-  //   );
-  // }
-}
-
-class RequirementBloc {
-  // final BuildContext context;
-
-  // List<RequestModel> requestModel = [];
-  // final streamController = BehaviorSubject<List<RequestModel>?>();
-
-  // RequirementBloc(this.context);
-
-  // void init() {}
-
-  // _initMockData() {
-  //   requestModel = requestList;
-  //   streamController.add(requestModel);
-  // }
-
-  // onRefresh({bool isRefresh = false}) async {
-  //   if (isRefresh == true || requestModel.isEmpty) {
-  //     await onGetRequired();
-  //     // _initMockData();
-  //   }
-  // }
-
-  // onTapItem(RequestModel model) {}
-
-  // dispose() {
-  //   streamController.close();
-  // }
-
-  // onGetRequired() async {
-  //   final ResponseModel response = await Repository.lookupCustomerRequests(
-  //     context,
-  //     CustomerRequestModel(danhBo: ContactDetailBloc.rawModel?.danhBo),
-  //   );
-  // }
 }
 
 class BadDebtBloc {

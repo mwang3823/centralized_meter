@@ -75,13 +75,23 @@ class MeterReplacementBloc {
   }
 
   onGetImage() async {
-    final url = '${Globals.config.nhaBeSever}${NhabeApi.hinhBaoThay}';
+    try {
+      final server = Globals.config.nhaBeSever;
+      if (server == null || server.isEmpty) {
+        imagesLichSuThay = [];
+        return;
+      }
 
-    imagesLichSuThay = await Utilities.fetchDataList<HinhAnhLichSuThayResModel>(
-      url: url,
-      body: {"valstring1": _danhbo},
-      fromJson: (json) => HinhAnhLichSuThayResModel.fromJson(json),
-    );
+      final url = '$server${NhabeApi.hinhBaoThay}';
+
+      imagesLichSuThay = await Utilities.fetchDataList<HinhAnhLichSuThayResModel>(
+        url: url,
+        body: {"valstring1": _danhbo},
+        fromJson: (json) => HinhAnhLichSuThayResModel.fromJson(json),
+      );
+    } catch (e) {
+      imagesLichSuThay = [];
+    }
   }
 
   onMapImage(List<HinhAnhLichSuThayResModel> imagesList) {

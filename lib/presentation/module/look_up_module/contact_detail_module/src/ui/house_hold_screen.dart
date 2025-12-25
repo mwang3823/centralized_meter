@@ -103,12 +103,17 @@ class _HouseHoldScreenState extends State<HouseHoldScreen>
                 title: LangKey.current.note,
                 content: CustomAppFormat.formatValue(model?.ghiChu),
               ),
+              CustomColumnInformation(
+                title: LangKey.current.document_type,
+                content: CustomAppFormat.formatValue(model?.loaiGiayTo),
+              ),
             ],
           ),
         ],
       ),
     );
   }
+
 
   @override
   bool get wantKeepAlive => true;

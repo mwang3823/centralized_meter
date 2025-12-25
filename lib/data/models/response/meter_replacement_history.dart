@@ -247,6 +247,7 @@ class DoiNangModel {
   String? ghiChu;
   String? dinhKem;
   String? loaiBaoThay;
+  String? soHoSo;
 
   DoiNangModel({
     this.soThanDHN,
@@ -256,7 +257,8 @@ class DoiNangModel {
     this.chiKhoaGoc,
     this.ghiChu,
     this.dinhKem,
-    this.loaiBaoThay
+    this.loaiBaoThay,
+    this.soHoSo
   });
 
   factory DoiNangModel.fromJson(Map<String, dynamic> json) {
@@ -269,6 +271,8 @@ class DoiNangModel {
       chiKhoaGoc: json['chi_khoa_goc'],
       ghiChu: json['ghi_chu'],
       dinhKem: json['dinh_kem'],
+      soHoSo: json['so_ho_so']
+      
     );
   }
 
@@ -281,6 +285,8 @@ class DoiNangModel {
       'chi_khoa_goc': chiKhoaGoc,
       'ghi_chu': ghiChu,
       'dinh_kem': dinhKem,
+      'loai_bao_thay':loaiBaoThay,
+      'so_ho_so':soHoSo
     };
   }
 }

@@ -13,11 +13,18 @@ class FluctuationMeterBloc {
   final CustomerListModel rawModel;
   FluctuationMeterBloc(this.context, this.rawModel);
 
-  onRefresh() {
-    onGetFluctuation();
+  bool refresh = true;
+
+  onRefresh({bool isRefresh = false}) {
+    if (refresh == true || isRefresh == true) {
+      onGetFluctuation();
+      refresh = false;
+    }
   }
 
-  init() {}
+  init() {
+    refresh = true;
+  }
 
   onDispose() {
     streamBienDong.close();
@@ -26,9 +33,15 @@ class FluctuationMeterBloc {
   final streamBienDong = BehaviorSubject<List<FluctuationMeterResModel>>();
 
   onGetFluctuation() async {
-    String url = '${Globals.config.nhaBeSever}${NhabeApi.bienDong}';
-
     try {
+      final server = Globals.config.nhaBeSever;
+      if (server == null || server.isEmpty) {
+        streamBienDong.set([]);
+        return;
+      }
+
+      final url = '$server${NhabeApi.bienDong}';
+
       final fluctuations =
           await Utilities.fetchDataList<FluctuationMeterResModel>(
             url: url,
@@ -36,6 +49,8 @@ class FluctuationMeterBloc {
             fromJson: (json) => FluctuationMeterResModel.fromJson(json),
           );
       streamBienDong.set(fluctuations);
-    } catch (e) {}
+    } catch (e) {
+      streamBienDong.set([]);
+    }
   }
 }
