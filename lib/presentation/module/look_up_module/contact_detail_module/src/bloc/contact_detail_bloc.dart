@@ -400,7 +400,7 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   }
 
   onGetToaDo() async {
-    ToaDoKhachHangResponse model = await Utilities.onGetLatLong(
+    ToaDoKhachHangResponse? model = await Utilities.onGetLatLong(
       rawModel?.danhBo ?? '',
     );
     toaDo = model;

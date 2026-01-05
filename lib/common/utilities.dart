@@ -174,21 +174,30 @@ class Utilities {
     return numericOnly;
   }
 
-  static onGetLatLong(String danhBo) async {
-    final res = await http.post(
-      Uri.parse('${Globals.config.nhaBeSever}${NhabeApi.toaDoKhachHang}'),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": "AspxAutoDetectCookieSupport=1",
-      },
-      body: {"valstring1": danhBo},
-    );
-    if (res.statusCode == 200) {
-      final jsonMap = json.decode(res.body) as Map<String, dynamic>;
-      final ToaDoKhachHangResponse? model = ToaDoKhachHangResponse.fromJson(
-        jsonMap,
+  static Future<ToaDoKhachHangResponse?> onGetLatLong(String danhBo) async {
+    try {
+      final res = await http.post(
+        Uri.parse('${Globals.config.nhaBeSever}${NhabeApi.toaDoKhachHang}'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Cookie": "AspxAutoDetectCookieSupport=1",
+        },
+        body: {"valstring1": danhBo},
       );
-      return model;
+      if (res.statusCode == 200) {
+        final decoded = json.decode(res.body);
+        if (decoded == null || decoded is! Map<String, dynamic>) {
+          return null;
+        }
+        final ToaDoKhachHangResponse model = ToaDoKhachHangResponse.fromJson(
+          decoded,
+        );
+        return model;
+      }
+      return null;
+    } catch (e) {
+      customPrint('onGetLatLong error: $e');
+      return null;
     }
   }
 

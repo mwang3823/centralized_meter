@@ -72,18 +72,24 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
   }
 
   _openGoogleMap() async {
-    final lat = currentToaDo?.latitude ?? 10.762622;
-    final lng = currentToaDo?.longitude ?? 106.660172;
-
-    final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
-    final googleMapsWebUrl = Uri.parse(
-      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
-    );
-
     try {
-      await launchUrl(googleMapsAppUrl, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      await launchUrl(googleMapsWebUrl, mode: LaunchMode.externalApplication);
+      final lat = currentToaDo?.latitude;
+      final lng = currentToaDo?.longitude;
+
+      final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
+      final googleMapsWebUrl = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+      );
+
+      try {
+        await launchUrl(googleMapsAppUrl, mode: LaunchMode.externalApplication);
+      } catch (_) {
+        await launchUrl(googleMapsWebUrl, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error launching Google Maps: $e');
+      }
     }
   }
 
@@ -95,11 +101,11 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
       return;
     }
     streamLoading.set(true);
-    ToaDoKhachHangResponse model = await Utilities.onGetLatLong(
+    ToaDoKhachHangResponse? model = await Utilities.onGetLatLong(
       widget.model?.danhBo ?? '',
     );
     currentToaDo = model;
-    streamToaDo.set(model);
+    streamToaDo.set(model ?? ToaDoKhachHangResponse());
     streamLoading.set(false);
     streamLoading.set(false);
   }

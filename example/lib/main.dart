@@ -233,7 +233,9 @@ class DemoPage extends StatefulWidget {
 
 class _DemoPageState extends State<DemoPage> {
   final _searchController = TextEditingController();
-  final _danhBoController = TextEditingController(text: '19021136048'); //DANHBO
+  // final _danhBoController = TextEditingController(text: '19021136048'); //DANHBO
+
+  final _danhBoController = TextEditingController(text: '04011011780'); //DANHBO
 
   final _searchModel = TextEditingController();
   final _searchModelFocusNode = FocusNode();

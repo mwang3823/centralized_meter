@@ -48,7 +48,7 @@ class PaymentHistoryBloc {
     int nam = 0;
 
     if (kyThanhToan.contains('/')) {
-      final parts = kyThanhToan.split('/'); 
+      final parts = kyThanhToan.split('/');
 
       ky = int.tryParse(parts[0]) ?? 0;
 
@@ -91,5 +91,4 @@ class PaymentHistoryBloc {
     historyPaymentModel = data;
     streamPaymentModel.set(historyPaymentModel ?? PaymentHistoryResModel());
   }
-
 }
