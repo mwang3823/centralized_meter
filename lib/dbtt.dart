@@ -31,7 +31,7 @@ export 'common/localization/l10n.dart' show LangKey, AppLocalizationDelegate;
 
 class DbttPlugin {
   static bool _initialized = false;
-  
+
   static Future<LoginResModel> init({
     required String username,
     required String password,
@@ -42,7 +42,7 @@ class DbttPlugin {
     bool enableLang = true,
     String? mapApiKey,
     String? server,
-    String? nhaBeSever
+    String? nhaBeSever,
   }) async {
     if (_initialized) {
       return Globals.model!;
@@ -59,7 +59,7 @@ class DbttPlugin {
       mapApiKey: mapApiKey,
       releaseDate: null,
       server: server,
-      nhaBeSever: nhaBeSever
+      nhaBeSever: nhaBeSever,
     );
 
     Globals.locale = locale;
@@ -102,8 +102,8 @@ class DbttPlugin {
     CustomNavigator.push(context, OverviewReportScreen());
   }
 
-    /// Push đến màn hình báo cáo tổng quan
-  static void pushpushMeterSchedule(BuildContext context,String danhBo) {
+  /// Push đến màn lịch đọc số
+  static void pushpushMeterSchedule(BuildContext context, String danhBo) {
     _assertInitialized();
     CustomNavigator.push(context, ReadingSchduleScreen(danhBo: danhBo));
   }
@@ -115,11 +115,16 @@ class DbttPlugin {
   }
 
   /// Push đến màn hình tra cứu danh bạ với option được chỉ định
-  /// [option] - OptionModel chứa thông tin tab cần chọn (match theo id)
-  /// Các id có sẵn: 'danhbo', 'hoten', 'lotrinh', 'diachi'
-  static void pushLookupScreenWithOption(BuildContext context, OptionModel option) {
+  static void pushLookupScreenWithOption(
+    BuildContext context,
+    OptionModel option, {
+    String? search,
+  }) {
     _assertInitialized();
-    CustomNavigator.push(context, LookupScreen(initialOption: option));
+    CustomNavigator.push(
+      context,
+      LookupScreen(initialOption: option, search: search),
+    );
   }
 
   /// Push đến màn hình báo cáo so sánh
@@ -185,15 +190,19 @@ class DbttPlugin {
   ///   12: Update history (Lịch sử cập nhật)
   ///   13: Messages (Tin nhắn)
   ///   14: Digitize (Số hóa)
+
   static void pushContactDetailWithTab(
     BuildContext context,
-     String danhBo,
+    String danhBo,
     int tabIndex,
   ) {
     _assertInitialized();
     CustomNavigator.push(
       context,
-      ContactDetailScreen(customer: CustomerListModel(danhBo: danhBo), initialTabIndex: tabIndex),
+      ContactDetailScreen(
+        customer: CustomerListModel(danhBo: danhBo),
+        initialTabIndex: tabIndex,
+      ),
     );
   }
 
@@ -223,7 +232,7 @@ class DbttPlugin {
 
   /// Supported locales của plugin
   static List<Locale> get supportedLocales => const [
-        Locale('vi'),
-        Locale('en'),
-      ];
+    Locale('vi'),
+    Locale('en'),
+  ];
 }

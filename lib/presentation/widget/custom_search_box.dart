@@ -342,6 +342,7 @@ class _CustomSearchOptionState extends State<CustomSearchOption> {
                   labelStyle: TextStyle(
                     fontSize: AppTextSizes.body.value,
                     color: AppColors.hint,
+                    fontFamily: AppFonts.montserrat,
                   ),
 
                   prefixIcon: Padding(

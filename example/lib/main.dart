@@ -1,5 +1,7 @@
+import 'package:dbtt/common/theme.dart';
 import 'package:dbtt/dbtt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -47,7 +49,13 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   String? _errorMessage;
 
-
+  String server = 'http://nhabe-api.e-point.xyz/';
+  String nhaBeServer = 'https://kinhdoanh.capnuocnhabe.vn/api/';
+  String username = "test";
+  String pass = "123456";
+  String digitizeKey =
+      'https://services.capnuocnhabe.vn/tracuuhoso/viewfilesho?id=';
+  String mapApiKey = 'AIzaSyClCOES8RBETmqX4qjixwveOuEuo7s-Xf4';
 
   @override
   void initState() {
@@ -226,6 +234,10 @@ class DemoPage extends StatefulWidget {
 class _DemoPageState extends State<DemoPage> {
   final _searchController = TextEditingController();
   final _danhBoController = TextEditingController(text: '19021136048'); //DANHBO
+
+  final _searchModel = TextEditingController();
+  final _searchModelFocusNode = FocusNode();
+
   String _selectedSearchType = 'danhbo';
   String? _searchResult;
   bool _isSearching = false;
@@ -261,6 +273,8 @@ class _DemoPageState extends State<DemoPage> {
   void dispose() {
     _searchController.dispose();
     _danhBoController.dispose();
+    _searchModel.dispose();
+    _searchModelFocusNode.dispose();
     super.dispose();
   }
 
@@ -409,6 +423,11 @@ class _DemoPageState extends State<DemoPage> {
               title: 'pushLookupScreenWithOption - Tra cứu theo loại',
               color: Colors.amber.shade50,
               children: [
+                CustomTextField(
+                  focusNode: _searchModelFocusNode,
+                  controller: _searchModel,
+                ),
+                const SizedBox(height: 8),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
@@ -417,6 +436,7 @@ class _DemoPageState extends State<DemoPage> {
                       onPressed: () => DbttPlugin.pushLookupScreenWithOption(
                         context,
                         OptionModel(id: option['id']),
+                        search: _searchModel.text,
                       ),
                       icon: Icon(option['icon'], size: 18),
                       label: Text(option['name']),
@@ -736,5 +756,165 @@ class _DemoPageState extends State<DemoPage> {
         ],
       ),
     );
+  }
+}
+
+//___________________________________________________________
+
+class CustomTextFieldModel {
+  final String? title;
+  final FocusNode focusNode;
+  final TextEditingController controller;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
+  final String? hintText;
+  final int maxLines;
+  final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
+  final double? width;
+  final VoidCallback? onTap;
+  final String? suffixIcon;
+  final String? subTitle;
+  final String? subTitle2;
+
+  /// true = không cho nhập, chỉ hiển thị giá trị
+  bool readOnly;
+
+  /// Icon widget để hiển thị ở cuối textfield (ví dụ: icon check)
+  Widget? suffixIconWidget;
+
+  /// Stream để cập nhật suffixIconWidget (cho check chì góc)
+  Stream<Widget?>? suffixIconStream;
+
+  CustomTextFieldModel({
+    this.title,
+    required this.focusNode,
+    required this.controller,
+    this.keyboardType,
+    this.inputFormatters,
+    this.textInputAction,
+    this.hintText,
+    this.maxLines = 1,
+    this.onSubmitted,
+    this.onChanged,
+    this.width,
+    this.onTap,
+    this.suffixIcon,
+    this.subTitle,
+    this.subTitle2,
+    this.readOnly = false,
+    this.suffixIconWidget,
+    this.suffixIconStream,
+  });
+
+  void dispose() {
+    focusNode.dispose();
+    controller.dispose();
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final FocusNode focusNode;
+  final TextEditingController controller;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
+  final String? hintText;
+  final int maxLines;
+  final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
+  final double? width;
+  final VoidCallback? onTap;
+  final String? suffixIcon;
+  final Icon? suffixIconData;
+  final Widget? suffixWidget;
+  final TextStyle? hintStyle;
+  final bool readOnly;
+
+  CustomTextField({
+    super.key,
+    required this.focusNode,
+    required this.controller,
+    this.keyboardType,
+    this.inputFormatters,
+    this.textInputAction,
+    this.hintText,
+    this.maxLines = 1,
+    this.onSubmitted,
+    this.onChanged,
+    this.width,
+    this.onTap,
+    this.suffixIcon,
+    this.suffixIconData,
+    this.suffixWidget,
+    this.hintStyle,
+    this.readOnly = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget field = TextField(
+      onTap: () {
+        if (onTap != null) onTap!();
+      },
+      readOnly: readOnly || onTap != null,
+      focusNode: focusNode,
+      controller: controller,
+      decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.darkGrey, width: 0.7),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primary, width: 0.7),
+        ),
+        isDense: true,
+
+        contentPadding: EdgeInsets.symmetric(vertical: AppSizes.minPadding),
+        hintText: hintText,
+        hintStyle:
+            hintStyle ??
+            TextStyle(
+              color: AppColors.hint,
+              fontSize: AppTextSizes.subBody.value,
+            ),
+        suffixIcon: suffixIcon != null
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: AppSizes.minPadding / 2),
+                child: Image.asset(
+                  suffixIcon!,
+                  width: AppSizes.icon,
+                  height: AppSizes.icon,
+                ),
+              )
+            : suffixWidget != null
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: AppSizes.minPadding / 2),
+                child: suffixWidget,
+              )
+            : suffixIconData != null
+            ? suffixIconData
+            : null,
+        suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+      ),
+      style: TextStyle(
+        fontSize: AppTextSizes.body.value,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      textInputAction: textInputAction,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      minLines: 1,
+      inputFormatters: inputFormatters,
+      onSubmitted: onSubmitted,
+      onChanged: onChanged,
+    );
+
+    if (width != null) {
+      return SizedBox(width: width, child: field);
+    }
+
+    return field;
   }
 }

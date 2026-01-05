@@ -14,10 +14,6 @@ import '../../../../../../../../../domain/repository.dart' show Repository;
 import '../ui/lookup_screen.dart';
 
 class LookupBloc extends BaseBloc<LookupScreen> {
-  final OptionModel? initialOption;
-
-  LookupBloc({this.initialOption});
-
   int page = 1;
 
   final FocusNode focusSearch = FocusNode();
@@ -38,9 +34,9 @@ class LookupBloc extends BaseBloc<LookupScreen> {
     Globals.customerFilterType.forEach((element) => element.isSelected = false);
 
     // Nếu có initialOption, tìm và chọn tab tương ứng
-    if (initialOption != null) {
+    if (widget.initialOption != null) {
       final matchIndex = Globals.customerFilterType.indexWhere(
-        (e) => e.id == initialOption!.id,
+        (e) => e.id == widget.initialOption!.id,
       );
       if (matchIndex != -1) {
         Globals.customerFilterType[matchIndex].isSelected = true;
@@ -60,12 +56,16 @@ class LookupBloc extends BaseBloc<LookupScreen> {
 
   @override
   void onReady() {
-    onGetCustomerList();
     // Auto focus vào ô search nếu có initialOption
-    if (initialOption != null) {
-      focusSearch.requestFocus();
+    if (widget.initialOption != null) {
+      if (widget.search != null && widget.search?.isNotEmpty == true) {
+        controllerSearch.text = widget.search!;
+        // Không cần gọi onGetCustomerList ở đây vì onChange sẽ tự trigger
+      } else {
+        onGetCustomerList();
+        focusSearch.requestFocus();
+      }
     }
-    // TODO: implement onReady
   }
 
   @override

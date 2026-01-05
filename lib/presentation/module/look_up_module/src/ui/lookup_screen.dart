@@ -11,10 +11,11 @@ import '../bloc/lookup_bloc.dart';
 
 class LookupScreen extends BaseView {
   final OptionModel? initialOption;
+  final String? search;
 
-  LookupScreen({this.initialOption});
+  LookupScreen({this.initialOption, this.search});
 
-  late final LookupBloc _bloc = LookupBloc(initialOption: initialOption);
+  late final LookupBloc _bloc = LookupBloc();
   @override
   LookupBloc createState() => _bloc;
 
@@ -94,7 +95,9 @@ class LookupScreen extends BaseView {
                               },
                               onPhoneNumber:
                                   (phoneNumber) =>
-                                      CustomAppFormat.callPhoneFormat(phoneNumber),
+                                      CustomAppFormat.callPhoneFormat(
+                                        phoneNumber,
+                                      ),
                             ),
                           )
                           .toList(),
