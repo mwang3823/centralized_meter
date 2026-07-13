@@ -84,43 +84,79 @@ Widget BuildHorizontalImageListBase64({
       separatorBuilder: (context, index) => const SizedBox(width: 8),
       itemBuilder: (context, index) {
         final base64Str = images[index];
+        final isUrl = base64Str.startsWith('http');
 
         Widget imageWidget;
 
         if (base64Str.isNotEmpty) {
-          try {
-            final bytes = base64Decode(base64Str);
-            imageWidget = Image.memory(
-              bytes,
+          if (isUrl) {
+            imageWidget = Image.network(
+              base64Str,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return Image.asset(Assets.resolve(Assets.imageLogo), fit: BoxFit.cover);
+                return Image.asset(
+                  Assets.resolve(Assets.imageLogo),
+                  fit: BoxFit.cover,
+                );
               },
             );
-          } catch (_) {
-            imageWidget = Image.asset(Assets.resolve(Assets.imageLogo), fit: BoxFit.cover);
+          } else {
+            try {
+              final bytes = base64Decode(base64Str);
+              imageWidget = Image.memory(
+                bytes,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    Assets.resolve(Assets.imageLogo),
+                    fit: BoxFit.cover,
+                  );
+                },
+              );
+            } catch (_) {
+              imageWidget = Image.asset(
+                Assets.resolve(Assets.imageLogo),
+                fit: BoxFit.cover,
+              );
+            }
           }
         } else {
-          imageWidget = Image.asset(Assets.resolve(Assets.imageLogo), fit: BoxFit.cover);
+          imageWidget = Image.asset(
+            Assets.resolve(Assets.imageLogo),
+            fit: BoxFit.cover,
+          );
         }
 
         return InkWell(
           onTap: () {
             if (onTap != null) onTap();
             if (base64Str.isNotEmpty) {
-              try {
-                final bytes = base64Decode(base64Str);
+              if (isUrl) {
                 showDialog(
                   context: context,
                   builder:
                       (_) => Dialog(
                         insetPadding: const EdgeInsets.all(16),
                         child: InteractiveViewer(
-                          child: Image.memory(bytes, fit: BoxFit.contain),
+                          child: Image.network(base64Str, fit: BoxFit.contain),
                         ),
                       ),
                 );
-              } catch (_) {}
+              } else {
+                try {
+                  final bytes = base64Decode(base64Str);
+                  showDialog(
+                    context: context,
+                    builder:
+                        (_) => Dialog(
+                          insetPadding: const EdgeInsets.all(16),
+                          child: InteractiveViewer(
+                            child: Image.memory(bytes, fit: BoxFit.contain),
+                          ),
+                        ),
+                  );
+                } catch (_) {}
+              }
             }
           },
           child: ClipRRect(

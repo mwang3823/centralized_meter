@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 import 'package:dbtt/presentation/widget/custom_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -72,9 +73,26 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
   }
 
   _openGoogleMap() async {
-    final lat = currentToaDo?.latitude ?? 10.762622;
-    final lng = currentToaDo?.longitude ?? 106.660172;
+    double lat;
+    double lng;
 
+    // if (currentToaDo?.latitude != null && currentToaDo?.longitude != null) {
+    //   lat = currentToaDo!.latitude!;
+    //   lng = currentToaDo!.longitude!;
+    // } else {
+    //   final coords = _parseWKTToLatLng(
+    //     currentToaDo?.shape?.geometry?.wellKnownText,
+    //   );
+    //   lat = coords?.lat ?? 10.762622;
+    //   lng = coords?.lng ?? 106.660172;
+    // }
+
+    final coords = _parseWKTToLatLng(
+      currentToaDo?.shape?.geometry?.wellKnownText,
+    );
+    lat = coords?.lat ?? 10.762622;
+    lng = coords?.lng ?? 106.660172;
+    //______________________________
     final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
     final googleMapsWebUrl = Uri.parse(
       'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
@@ -85,6 +103,80 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
     } catch (_) {
       await launchUrl(googleMapsWebUrl, mode: LaunchMode.externalApplication);
     }
+  }
+
+  ({double lat, double lng})? _parseWKTToLatLng(String? wkt) {
+    if (wkt == null) return null;
+    final match = RegExp(
+      r'POINT\s*\(([+-]?\d+\.?\d*)\s+([+-]?\d+\.?\d*)\)',
+    ).firstMatch(wkt);
+    if (match == null) return null;
+    final easting = double.tryParse(match.group(1) ?? '');
+    final northing = double.tryParse(match.group(2) ?? '');
+    if (easting == null || northing == null) return null;
+    return _utm48NToLatLng(easting, northing);
+  }
+
+  ({double lat, double lng}) _utm48NToLatLng(double easting, double northing) {
+    const a = 6378137.0;
+    const f = 1 / 298.257223563;
+    final e2 = 2 * f - f * f;
+    final e2p = e2 / (1 - e2);
+    const k0 = 0.9996;
+    const lon0 = 105.0 * math.pi / 180;
+
+    final x = easting - 500000.0;
+    final M = northing / k0;
+    final mu =
+        M / (a * (1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * e2 * e2 * e2 / 256));
+
+    final e1 = (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));
+    final phi1 =
+        mu +
+        (3 * e1 / 2 - 27 * math.pow(e1, 3) / 32) * math.sin(2 * mu) +
+        (21 * e1 * e1 / 16 - 55 * math.pow(e1, 4) / 32) * math.sin(4 * mu) +
+        (151 * math.pow(e1, 3) / 96) * math.sin(6 * mu) +
+        (1097 * math.pow(e1, 4) / 512) * math.sin(8 * mu);
+
+    final sinPhi1 = math.sin(phi1);
+    final cosPhi1 = math.cos(phi1);
+    final tanPhi1 = math.tan(phi1);
+
+    final N1 = a / math.sqrt(1 - e2 * sinPhi1 * sinPhi1);
+    final T1 = tanPhi1 * tanPhi1;
+    final C1 = e2p * cosPhi1 * cosPhi1;
+    final R1 = a * (1 - e2) / math.pow(1 - e2 * sinPhi1 * sinPhi1, 1.5);
+    final D = x / (N1 * k0);
+    final D2 = D * D;
+    final D3 = D2 * D;
+    final D4 = D3 * D;
+    final D5 = D4 * D;
+    final D6 = D5 * D;
+
+    final lat =
+        phi1 -
+        (N1 * tanPhi1 / R1) *
+            (D2 / 2 -
+                (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * e2p) * D4 / 24 +
+                (61 +
+                        90 * T1 +
+                        298 * C1 +
+                        45 * T1 * T1 -
+                        252 * e2p -
+                        3 * C1 * C1) *
+                    D6 /
+                    720);
+
+    final lon =
+        lon0 +
+        (D -
+                (1 + 2 * T1 + C1) * D3 / 6 +
+                (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * e2p + 24 * T1 * T1) *
+                    D5 /
+                    120) /
+            cosPhi1;
+
+    return (lat: lat * 180 / math.pi, lng: lon * 180 / math.pi);
   }
 
   onGetLatLong() async {

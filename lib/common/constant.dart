@@ -78,6 +78,31 @@ class PrinterSize {
   static const size512 = 512;
 }
 
+class PrintInformation {
+  static const congTy = "CÔNG TY CỔ PHẦN \n CẤP NƯỚC";
+  static const tenCongTy = "NHÀ BÈ";
+  static const title = "PHIẾU BÁO CHỈ SỐ & \n TIỀN NƯỚC KỲ";
+  static const diaChi =
+      "1179 Nguyễn Văn Linh, Tân Phong, Thành phố Hồ Chí Minh";
+  static const tongDai = "1900-1210";
+  static const soTaiKhoan = "007 100 2423478";
+  static const nganHang = "NH TMCP Ngoại Thương VN";
+  static const chiNhanh = "Chi Nhánh Sài Thành TPHCM (VCB)";
+  static const thongBaoCapNhatHoaDonBold = "Sau 4 ngày làm việc, ";
+  static const thongBaoCapNhatHoaDonNormal =
+      "kể từ ngày ghi chỉ số nước, dữ liệu hóa đơn sẽ được cập nhật tại website:";
+  static const website = "www.capnuocnhabe.vn";
+  static const thongBaoThanhToan =
+      "Khách hàng vui lòng thanh toán qua QR, ngân hàng hoặc tại các điểm thu hộ.";
+  static const thongBaoLienHe =
+      "Mọi thắc mắc cần giải đáp, quý khách vui lòng liên hệ Trung tâm chăm sóc khách hàng - Công ty CPCN Nhà Bè";
+  static const soDienThoai = "Số điện thoại: 1900.1210";
+  static const thongBaoCapNhatThongTin =
+      "Quý khách vui lòng kiểm tra thông tin khách hàng trên phiếu báo này và liên hệ SĐT: 1900.1210 để cập nhật lại nếu chưa chính xác.";
+  static const staffObstacle =
+      'Do trở ngại: {obstacle} trong việc ghi chỉ số ĐHN, đề nghị quý khách hàng vui lòng thông báo chỉ số nước qua số điện thoại của nhân viên đọc số hoặc số điện thoại văn phòng Đội Quản lý Đồng hồ nước 1900.1210 trước ngày {day}';
+}
+
 class WaterServiceLookup {
   static String getValueName(String code) {
     if (code.isEmpty) {

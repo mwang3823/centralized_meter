@@ -94,6 +94,7 @@ class ConsumptionIndexDetailResModel {
   String? sdtNhanVien;
   String? ghiChu;
   String? anhDhn;
+  String? linkAnhDhn;
 
   ConsumptionIndexDetailResModel({
     this.kyThanhToan,
@@ -111,6 +112,7 @@ class ConsumptionIndexDetailResModel {
     this.sdtNhanVien,
     this.ghiChu,
     this.anhDhn,
+    this.linkAnhDhn,
   });
 
   factory ConsumptionIndexDetailResModel.fromJson(Map<String, dynamic> json) {
@@ -130,6 +132,8 @@ class ConsumptionIndexDetailResModel {
       sdtNhanVien: json['sdt_nhan_vien'],
       ghiChu: json['ghi_chu'],
       anhDhn: json['anh_dhn'].toString(),
+      linkAnhDhn:
+          json['link_anh_dhn'] == null ? null : json['link_anh_dhn'].toString(),
     );
   }
 
@@ -150,6 +154,7 @@ class ConsumptionIndexDetailResModel {
     data['sdt_nhan_vien'] = sdtNhanVien;
     data['ghi_chu'] = ghiChu;
     data['anh_dhn'] = anhDhn;
+    data['link_anh_dhn'] = linkAnhDhn;
     return data;
   }
 }

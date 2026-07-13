@@ -52,7 +52,6 @@ class ConsumptionIndexDetailBloc
   void onReady() {
     // TODO: implement onReady
     onGetDetail();
-    Future.wait<void>([fetchIncidents(), onGetDetail()]);
   }
 
   @override
@@ -96,6 +95,20 @@ class ConsumptionIndexDetailBloc
     streamConsumptionDetail.set(
       consumptionDetail ?? ConsumptionIndexDetailResModel(),
     );
+
+    final linkAnhDhn = data.linkAnhDhn ?? '';
+    if (linkAnhDhn.isNotEmpty && linkAnhDhn != 'null') {
+      final images =
+          linkAnhDhn
+              .split(',')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .map((e) => ConsumptionImageResModel(linkHinh: e))
+              .toList();
+      streamConsumptionImageResModel.set(images);
+    } else {
+      fetchIncidents();
+    }
   }
 
   fetchIncidents() async {

@@ -159,6 +159,20 @@ class CustomAppFormat {
 
     return formatDate(parseDate(event, parse: parse), format: format);
   }
+
+  static String formatMonthYear(String input) {
+    try {
+      if (input.length != 7 || !input.contains('/')) return input;
+
+      final parts = input.split('/');
+      final month = parts[0];
+      final year = parts[1];
+
+      return '$month/${year.substring(2)}';
+    } catch (_) {
+      return input;
+    }
+  }
 }
 
 extension SafeParsing on dynamic {
