@@ -73,26 +73,29 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
   }
 
   _openGoogleMap() async {
-    double lat;
-    double lng;
+    if (currentToaDo == null) {
+      await onGetLatLong();
+    }
 
-    // if (currentToaDo?.latitude != null && currentToaDo?.longitude != null) {
-    //   lat = currentToaDo!.latitude!;
-    //   lng = currentToaDo!.longitude!;
-    // } else {
-    //   final coords = _parseWKTToLatLng(
-    //     currentToaDo?.shape?.geometry?.wellKnownText,
-    //   );
-    //   lat = coords?.lat ?? 10.762622;
-    //   lng = coords?.lng ?? 106.660172;
-    // }
+    final apiLat = currentToaDo?.latitude;
+    final apiLng = currentToaDo?.longitude;
 
-    final coords = _parseWKTToLatLng(
-      currentToaDo?.shape?.geometry?.wellKnownText,
-    );
-    lat = coords?.lat ?? 10.762622;
-    lng = coords?.lng ?? 106.660172;
-    //______________________________
+    double? lat;
+    double? lng;
+
+    if (apiLat != null && apiLng != null && (apiLat != 0 || apiLng != 0)) {
+      lat = apiLat;
+      lng = apiLng;
+    } else {
+      final coords = _parseWKTToLatLng(
+        currentToaDo?.shape?.geometry?.wellKnownText,
+      );
+      lat = coords?.lat;
+      lng = coords?.lng;
+    }
+
+    if (lat == null || lng == null) return;
+
     final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
     final googleMapsWebUrl = Uri.parse(
       'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
