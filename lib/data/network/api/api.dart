@@ -72,11 +72,11 @@ class API {
       "api/customerdashboard/consumption-by-year"; //Báo cáo so sánh sản lượng
   static newInstallation() =>
       "api/customerdashboard/new-installation-history"; //gắn mới
+  static customerLocation() => "api/customer/location"; //Tọa độ khách hàng
 }
 
 class NhabeApi {
   static String hinhAnhKhieuNai = "wao/LayFileKhieuNai";
-  static String toaDoKhachHang = "wao/toadokhachhang";
   static String hinhBaoThay = "wao/LayHinhBaoThayTheoDanhBo";
   static String hinhDocSo = "wao/LayHinDocSoTheoNamKyDanhBo";
   static String hinhAnhDocSoNAT = "DocHinhTuNatServerWao";

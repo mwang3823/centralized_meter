@@ -9,7 +9,7 @@ import 'package:dbtt/presentation/widget/widget.dart';
 import '../../../../../../../../../../../common/app_format.dart';
 import '../../../../../../../../../../../data/models/response/consumption_index_res_model.dart';
 import '../../../../../../../../../../../data/models/response/customer_detail_res_model.dart';
-import '../../../../../../../../../../../data/models/response/lat_long_res_model.dart';
+import '../../../../../../../../../../../data/models/response/customer_location_res_model.dart';
 import '../bloc/consumption_index_detail_bloc.dart'
     show ConsumptionIndexDetailBloc;
 
@@ -18,7 +18,7 @@ class ConsumptionIndexDetailScreen extends BaseView {
   final String? maDanhBo;
   final ConsumptionIndexDetailBloc _bloc = ConsumptionIndexDetailBloc();
   final CustomerDetailResModel? detail;
-  final ToaDoKhachHangResponse? toaDo;
+  final CustomerLocationResModel? toaDo;
   ConsumptionIndexDetailScreen({
     this.model,
     this.maDanhBo,
@@ -82,9 +82,7 @@ class ConsumptionIndexDetailScreen extends BaseView {
             children: [
               CustomColumnInformationCustom(
                 title: LangKey.current.reading_date,
-                content: CustomAppFormat.parseAndFormatDate(
-                  data.ngayDoc,
-                ),
+                content: CustomAppFormat.parseAndFormatDate(data.ngayDoc),
                 isTitleBold: true,
               ),
               CustomColumnInformationCustom(

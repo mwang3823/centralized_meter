@@ -7,7 +7,7 @@ import 'package:dbtt/presentation/widget/widget.dart';
 
 import '../../../../../../../../../../../common/app_format.dart';
 import '../../../../../../../../../../../data/models/response/customer_detail_res_model.dart';
-import '../../../../../../../../../../../data/models/response/lat_long_res_model.dart';
+import '../../../../../../../../../../../data/models/response/customer_location_res_model.dart';
 import '../../../../../../../../../../../data/models/response/payment_history_detail_res_model.dart';
 import '../../../../../../../../../../../data/models/response/payment_history_res_model.dart';
 import '../../../../../../widget/custom_holdhouse_detail.dart';
@@ -18,7 +18,7 @@ class PaymentHistoryDetailScreen extends BaseView {
   final String? maDanhBo;
   final PaymentHistoryDetailBloc _bloc = PaymentHistoryDetailBloc();
   final CustomerDetailResModel? detail;
-  final ToaDoKhachHangResponse? toaDo;
+  final CustomerLocationResModel? toaDo;
   final String? ky;
   final String? nam;
 

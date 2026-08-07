@@ -8,7 +8,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:dbtt/common/assets.dart';
 import 'package:dbtt/common/localization/l10n.dart';
 import 'package:dbtt/common/theme.dart';
-import 'package:dbtt/common/utilities.dart';
 import 'package:dbtt/common/utils/custom_dialog.dart';
 import 'package:dbtt/common/utils/custom_loading.dart';
 import 'package:dbtt/common/utils/custom_navigator.dart';
@@ -21,8 +20,9 @@ import 'package:dbtt/domain/repository.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 
 import '../../../../../../../../../../data/models/request/lookup_payment_history_req_model.dart';
+import '../../../../../../../../../../data/models/request/customer_location_req_model.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
-import '../../../../../../../../../../data/models/response/lat_long_res_model.dart';
+import '../../../../../../../../../../data/models/response/customer_location_res_model.dart';
 import '../../../../../widget/custom_holdhouse_detail.dart';
 import '../../../../../widget/widget.dart';
 import '../ui/complaint_record_screen.dart';
@@ -64,10 +64,10 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   late List<CustomModelTabBar> tabs = [];
   final streamCustomerDetail = BehaviorSubject<CustomerDetailResModel>();
   final streamOptionModel = BehaviorSubject<OptionModel?>();
-  final streamToaDo = BehaviorSubject<ToaDoKhachHangResponse?>();
+  final streamToaDo = BehaviorSubject<CustomerLocationResModel?>();
   CustomerListModel? rawModel;
   CustomerDetailResModel? customerDetail;
-  ToaDoKhachHangResponse? toaDo;
+  CustomerLocationResModel? toaDo;
 
   ComplaintRecordBloc? complaintRecordBloc;
   ConsumptionIndexBloc? consumptionIndexBloc;
@@ -400,11 +400,15 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   }
 
   onGetToaDo() async {
-    ToaDoKhachHangResponse model = await Utilities.onGetLatLong(
-      rawModel?.danhBo ?? '',
+    final ResponseModel response = await Repository.customerLocation(
+      context,
+      CustomerLocationReqModel(danhBo: rawModel?.danhBo),
+      showError: false,
     );
-    toaDo = model;
-    streamToaDo.set(toaDo);
+    if (response.success) {
+      toaDo = CustomerLocationResModel.fromJson(response.data);
+      streamToaDo.set(toaDo);
+    }
   }
 }
 

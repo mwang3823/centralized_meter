@@ -6,7 +6,6 @@ import 'package:dbtt/common/localization/l10n.dart';
 import 'package:dbtt/common/utils/custom_dialog.dart';
 import 'package:dbtt/common/utils/custom_navigator.dart';
 import 'package:dbtt/data/local/shared_prefs/shared_prefs_key.dart';
-import 'package:dbtt/data/network/api/api.dart';
 import 'package:dbtt/presentation/widget/custom_text.dart';
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:device_id/device_id.dart';
@@ -16,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import '../data/models/base/option_model.dart';
-import '../data/models/response/lat_long_res_model.dart';
 import 'globals.dart';
 import 'theme.dart';
 
@@ -128,7 +126,6 @@ class Utilities {
     await Globals.prefs.setString(SharedPrefsKey.token, accessToken);
   }
 
-
   static Future<void> saveToClipboard(BuildContext context, String text) async {
     await Clipboard.setData(ClipboardData(text: text));
 
@@ -172,24 +169,6 @@ class Utilities {
   static normalizeNumber(String input) {
     final numericOnly = input.replaceAll(RegExp(r'[^0-9]'), '');
     return numericOnly;
-  }
-
-  static onGetLatLong(String danhBo) async {
-    final res = await http.post(
-      Uri.parse('${Globals.config.nhaBeSever}${NhabeApi.toaDoKhachHang}'),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": "AspxAutoDetectCookieSupport=1",
-      },
-      body: {"valstring1": danhBo},
-    );
-    if (res.statusCode == 200) {
-      final jsonMap = json.decode(res.body) as Map<String, dynamic>;
-      final ToaDoKhachHangResponse? model = ToaDoKhachHangResponse.fromJson(
-        jsonMap,
-      );
-      return model;
-    }
   }
 
   static Future<List<T>> fetchDataList<T>({

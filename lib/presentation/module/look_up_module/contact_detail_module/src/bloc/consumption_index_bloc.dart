@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:dbtt/common/utilities.dart';
@@ -6,17 +5,17 @@ import 'package:dbtt/common/utils/custom_navigator.dart';
 import 'package:dbtt/data/models/base/response_model.dart';
 import 'package:dbtt/data/models/response/customer_detail_res_model.dart';
 import 'package:dbtt/domain/repository.dart';
-import 'package:dbtt/presentation/base/base_view.dart';import '../../../../../../../../../../data/models/request/consumption_index_req_model.dart';
+import 'package:dbtt/presentation/base/base_view.dart';
+import '../../../../../../../../../../data/models/request/consumption_index_req_model.dart';
 import '../../../../../../../../../../data/models/response/consumption_index_res_model.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
-import '../../../../../../../../../../data/models/response/lat_long_res_model.dart';
+import '../../../../../../../../../../data/models/response/customer_location_res_model.dart';
 import '../../module/detail_module/ui/consumption_index_detail_screen.dart';
-
 
 class ConsumptionIndexBloc {
   final BuildContext context;
   CustomerListModel? rawModel;
-  final BehaviorSubject<ToaDoKhachHangResponse?>? streamToaDo;
+  final BehaviorSubject<CustomerLocationResModel?>? streamToaDo;
   final BehaviorSubject<CustomerDetailResModel?>? streamCustomerDetail;
   ConsumptionIndexBloc(
     this.context,
@@ -95,4 +94,3 @@ class ConsumptionIndexBloc {
     await onGetConsumptionIndex();
   }
 }
-

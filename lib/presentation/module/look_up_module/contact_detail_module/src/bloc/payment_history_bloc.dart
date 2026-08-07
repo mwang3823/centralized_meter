@@ -7,7 +7,7 @@ import 'package:dbtt/domain/repository.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 import '../../../../../../../../../../data/models/request/payment_history_req_model.dart';
 import '../../../../../../../../../../data/models/response/customer_list_res_model.dart';
-import '../../../../../../../../../../data/models/response/lat_long_res_model.dart';
+import '../../../../../../../../../../data/models/response/customer_location_res_model.dart';
 import '../../../../../../../../../../data/models/response/payment_history_res_model.dart';
 import '../../module/detail_module/ui/payment_history_detail_screen.dart';
 
@@ -17,7 +17,7 @@ class PaymentHistoryBloc {
   final BehaviorSubject<CustomerDetailResModel> customerDetail;
 
   PaymentHistoryReqModel? paymentFilter;
-  final BehaviorSubject<ToaDoKhachHangResponse?>? streamToaDo;
+  final BehaviorSubject<CustomerLocationResModel?>? streamToaDo;
   final streamPaymentFilter = BehaviorSubject<PaymentHistoryReqModel>();
 
   PaymentHistoryResModel? historyPaymentModel;
@@ -48,7 +48,7 @@ class PaymentHistoryBloc {
     int nam = 0;
 
     if (kyThanhToan.contains('/')) {
-      final parts = kyThanhToan.split('/'); 
+      final parts = kyThanhToan.split('/');
 
       ky = int.tryParse(parts[0]) ?? 0;
 
@@ -91,5 +91,4 @@ class PaymentHistoryBloc {
     historyPaymentModel = data;
     streamPaymentModel.set(historyPaymentModel ?? PaymentHistoryResModel());
   }
-
 }

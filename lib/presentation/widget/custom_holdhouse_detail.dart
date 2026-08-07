@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:math' as math;
 import 'package:dbtt/presentation/widget/custom_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dbtt/common/utilities.dart';
+import 'package:dbtt/domain/repository.dart';
 import 'package:dbtt/presentation/base/base_view.dart';
 import 'package:dbtt/presentation/widget/widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,13 +13,15 @@ import '../../common/app_format.dart';
 import '../../common/assets.dart';
 import '../../common/localization/l10n.dart';
 import '../../common/theme.dart';
+import '../../data/models/base/response_model.dart';
+import '../../data/models/request/customer_location_req_model.dart';
 import '../../data/models/response/customer_detail_res_model.dart';
-import '../../data/models/response/lat_long_res_model.dart';
+import '../../data/models/response/customer_location_res_model.dart';
 
 class CustomHoldHouseDetail extends StatefulWidget {
   final CustomerDetailResModel? model;
   final VoidCallback? onTapSchedule;
-  final ToaDoKhachHangResponse? toaDo;
+  final CustomerLocationResModel? toaDo;
 
   const CustomHoldHouseDetail({
     super.key,
@@ -35,8 +36,8 @@ class CustomHoldHouseDetail extends StatefulWidget {
 
 class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
     with AutomaticKeepAliveClientMixin {
-  ToaDoKhachHangResponse? currentToaDo;
-  final streamToaDo = BehaviorSubject<ToaDoKhachHangResponse>();
+  CustomerLocationResModel? currentToaDo;
+  final streamToaDo = BehaviorSubject<CustomerLocationResModel>();
   final streamLoading = BehaviorSubject<bool>();
   late final WebViewController _controller;
 
@@ -77,109 +78,32 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
       await onGetLatLong();
     }
 
-    final apiLat = currentToaDo?.latitude;
-    final apiLng = currentToaDo?.longitude;
+    final googleMapsLink = currentToaDo?.googleMapsLink;
+    final lat = currentToaDo?.latitude;
+    final lng = currentToaDo?.longitude;
 
-    double? lat;
-    double? lng;
+    final hasGoogleMapsLink =
+        googleMapsLink != null && googleMapsLink.isNotEmpty;
+    final hasLatLng = lat != null && lng != null;
 
-    if (apiLat != null && apiLng != null && (apiLat != 0 || apiLng != 0)) {
-      lat = apiLat;
-      lng = apiLng;
-    } else {
-      final coords = _parseWKTToLatLng(
-        currentToaDo?.shape?.geometry?.wellKnownText,
-      );
-      lat = coords?.lat;
-      lng = coords?.lng;
+    if (!hasGoogleMapsLink && !hasLatLng) return;
+
+    final googleMapsWebUrl =
+        hasGoogleMapsLink
+            ? Uri.parse(googleMapsLink)
+            : Uri.parse(
+              'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
+            );
+
+    if (hasLatLng) {
+      final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
+      try {
+        await launchUrl(googleMapsAppUrl, mode: LaunchMode.externalApplication);
+        return;
+      } catch (_) {}
     }
 
-    if (lat == null || lng == null) return;
-
-    final googleMapsAppUrl = Uri.parse('comgooglemaps://?q=$lat,$lng');
-    final googleMapsWebUrl = Uri.parse(
-      'https://www.google.com/maps/search/?api=1&query=$lat,$lng',
-    );
-
-    try {
-      await launchUrl(googleMapsAppUrl, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      await launchUrl(googleMapsWebUrl, mode: LaunchMode.externalApplication);
-    }
-  }
-
-  ({double lat, double lng})? _parseWKTToLatLng(String? wkt) {
-    if (wkt == null) return null;
-    final match = RegExp(
-      r'POINT\s*\(([+-]?\d+\.?\d*)\s+([+-]?\d+\.?\d*)\)',
-    ).firstMatch(wkt);
-    if (match == null) return null;
-    final easting = double.tryParse(match.group(1) ?? '');
-    final northing = double.tryParse(match.group(2) ?? '');
-    if (easting == null || northing == null) return null;
-    return _utm48NToLatLng(easting, northing);
-  }
-
-  ({double lat, double lng}) _utm48NToLatLng(double easting, double northing) {
-    const a = 6378137.0;
-    const f = 1 / 298.257223563;
-    final e2 = 2 * f - f * f;
-    final e2p = e2 / (1 - e2);
-    const k0 = 0.9996;
-    const lon0 = 105.0 * math.pi / 180;
-
-    final x = easting - 500000.0;
-    final M = northing / k0;
-    final mu =
-        M / (a * (1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * e2 * e2 * e2 / 256));
-
-    final e1 = (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));
-    final phi1 =
-        mu +
-        (3 * e1 / 2 - 27 * math.pow(e1, 3) / 32) * math.sin(2 * mu) +
-        (21 * e1 * e1 / 16 - 55 * math.pow(e1, 4) / 32) * math.sin(4 * mu) +
-        (151 * math.pow(e1, 3) / 96) * math.sin(6 * mu) +
-        (1097 * math.pow(e1, 4) / 512) * math.sin(8 * mu);
-
-    final sinPhi1 = math.sin(phi1);
-    final cosPhi1 = math.cos(phi1);
-    final tanPhi1 = math.tan(phi1);
-
-    final N1 = a / math.sqrt(1 - e2 * sinPhi1 * sinPhi1);
-    final T1 = tanPhi1 * tanPhi1;
-    final C1 = e2p * cosPhi1 * cosPhi1;
-    final R1 = a * (1 - e2) / math.pow(1 - e2 * sinPhi1 * sinPhi1, 1.5);
-    final D = x / (N1 * k0);
-    final D2 = D * D;
-    final D3 = D2 * D;
-    final D4 = D3 * D;
-    final D5 = D4 * D;
-    final D6 = D5 * D;
-
-    final lat =
-        phi1 -
-        (N1 * tanPhi1 / R1) *
-            (D2 / 2 -
-                (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * e2p) * D4 / 24 +
-                (61 +
-                        90 * T1 +
-                        298 * C1 +
-                        45 * T1 * T1 -
-                        252 * e2p -
-                        3 * C1 * C1) *
-                    D6 /
-                    720);
-
-    final lon =
-        lon0 +
-        (D -
-                (1 + 2 * T1 + C1) * D3 / 6 +
-                (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * e2p + 24 * T1 * T1) *
-                    D5 /
-                    120) /
-            cosPhi1;
-
-    return (lat: lat * 180 / math.pi, lng: lon * 180 / math.pi);
+    await launchUrl(googleMapsWebUrl, mode: LaunchMode.externalApplication);
   }
 
   onGetLatLong() async {
@@ -190,12 +114,16 @@ class _CustomHoldHouseDetailState extends State<CustomHoldHouseDetail>
       return;
     }
     streamLoading.set(true);
-    ToaDoKhachHangResponse model = await Utilities.onGetLatLong(
-      widget.model?.danhBo ?? '',
+    final ResponseModel response = await Repository.customerLocation(
+      context,
+      CustomerLocationReqModel(danhBo: widget.model?.danhBo ?? ''),
+      showError: false,
     );
-    currentToaDo = model;
-    streamToaDo.set(model);
-    streamLoading.set(false);
+    if (response.success) {
+      final model = CustomerLocationResModel.fromJson(response.data);
+      currentToaDo = model;
+      streamToaDo.set(model);
+    }
     streamLoading.set(false);
   }
 

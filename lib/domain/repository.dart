@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../data/models/base/response_model.dart';
 import '../data/models/request/customer_detail_req_model.dart';
 import '../data/models/request/customer_list_req_model.dart';
+import '../data/models/request/customer_location_req_model.dart';
 import '../data/models/request/comparison_req_model.dart';
 import '../data/models/request/consumption_index_req_model.dart';
 import '../data/models/request/lookup_payment_history_req_model.dart';
@@ -75,6 +76,18 @@ class Repository {
         context: context,
         url: API.customerDetail(),
         param: model.toJson(),
+      ).post();
+
+  static customerLocation(
+    BuildContext context,
+    CustomerLocationReqModel model, {
+    bool showError = true,
+  }) =>
+      Interaction(
+        context: context,
+        url: API.customerLocation(),
+        param: model.toJson(),
+        showError: showError,
       ).post();
 
   static lookupOverview(BuildContext context, ReportReqModel model) =>

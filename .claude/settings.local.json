@@ -6,7 +6,10 @@
       "Bash(flutter build:*)",
       "Bash(flutter clean:*)",
       "Bash(rtk grep *)",
-      "Bash(dart analyze *)"
+      "Bash(dart analyze *)",
+      "Bash(rtk read *)",
+      "Bash(rtk wc *)",
+      "Bash(dart format *)"
     ],
     "deny": [],
     "ask": []
