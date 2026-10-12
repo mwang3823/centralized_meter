@@ -4,7 +4,12 @@ import 'package:intl/intl.dart';
 import 'assets.dart';
 
 class AppColors {
-  static const primary = Color(0xFF0171CC);
+  static const primary = Color(0xFF1558B8);
+
+  /// Sắc đậm/nhạt suy ra từ [primary] — dùng cho gradient để đổi primary là
+  /// các nền gradient tự đổi theo, không cần mã cứng màu.
+  static final primaryDark = Color.lerp(primary, Colors.black, 0.3)!;
+  static final primaryLight = Color.lerp(primary, Colors.white, 0.12)!;
   static const secondary = Color(0xFF0171CC);
   static const accent = Color(0xFFFD5E32);
   static const white = Colors.white;

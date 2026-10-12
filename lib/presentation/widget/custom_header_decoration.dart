@@ -7,9 +7,13 @@ enum HeaderDecorationStyle { login, header, appBar, bar }
 class CustomHeaderDecoration extends StatelessWidget {
   final HeaderDecorationStyle style;
 
+  /// Tỉ lệ chiều cao phần header trên màn đăng nhập (chỉ dùng cho `login`).
+  final double heroFraction;
+
   const CustomHeaderDecoration({
     super.key,
     this.style = HeaderDecorationStyle.header,
+    this.heroFraction = 0.4,
   });
 
   @override
@@ -18,7 +22,7 @@ class CustomHeaderDecoration extends StatelessWidget {
       child: ClipRect(
         child: CustomPaint(
           size: Size.infinite,
-          painter: _HeaderDecorationPainter(style),
+          painter: _HeaderDecorationPainter(style, heroFraction),
         ),
       ),
     );
@@ -27,8 +31,9 @@ class CustomHeaderDecoration extends StatelessWidget {
 
 class _HeaderDecorationPainter extends CustomPainter {
   final HeaderDecorationStyle style;
+  final double heroFraction;
 
-  _HeaderDecorationPainter(this.style);
+  _HeaderDecorationPainter(this.style, this.heroFraction);
 
   static final Path _drop =
       Path()
@@ -145,8 +150,8 @@ class _HeaderDecorationPainter extends CustomPainter {
     final h = size.height;
     switch (style) {
       case HeaderDecorationStyle.login:
-        // Phần header chiếm 40% chiều cao; toạ độ gốc tính trên header 338.
-        final hero = h * 0.4;
+        // Toạ độ gốc tính trên header cao 338, co theo chiều cao thực tế.
+        final hero = h * heroFraction;
         final k = hero / 338;
         _ripples(canvas, Offset(w * 0.885, 36), 62, 42, 5);
         _dots(canvas, Rect.fromLTWH(22, 64 * k, 84, 84));
@@ -239,5 +244,5 @@ class _HeaderDecorationPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_HeaderDecorationPainter oldDelegate) =>
-      oldDelegate.style != style;
+      oldDelegate.style != style || oldDelegate.heroFraction != heroFraction;
 }

@@ -377,8 +377,8 @@ class _WaterUsageChartWidgetState extends State<WaterUsageChartWidget> {
           begin: const Alignment(-0.2, -1.0),
           end: const Alignment(1.0, 0.2),
           colors: [
-            const Color(0xFF0239FE).withValues(alpha: 1),
-            const Color(0xFF0285FE).withValues(alpha: 1),
+            AppColors.primary,
+            AppColors.secondary,
           ],
           stops: const [0.04, 1.0],
         ),

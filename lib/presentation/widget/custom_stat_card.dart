@@ -8,8 +8,8 @@ Widget buildStatCard({
   String? unit,
   String? description,
   Color iconBackgroundColor = const Color(0xFFE6F0FF),
-  Color iconColor = const Color(0xFF0052CC),
-  Color valueColor = const Color(0xFF0052CC),
+  Color iconColor = AppColors.primary,
+  Color valueColor = AppColors.primary,
   double? height,
 }) {
   return Container(
