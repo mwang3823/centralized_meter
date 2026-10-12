@@ -2,6 +2,7 @@ library widget;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:auto_size_text_plus/auto_size_text_plus.dart';
 import 'package:dbtt/common/app_format.dart';
@@ -57,6 +58,7 @@ part 'custom_bottom_type.dart';
 part 'custom_obstacle.dart';
 part 'custom_row_information.dart';
 part 'custom_tag.dart';
+part 'custom_header_decoration.dart';
 part 'custom_network_image.dart';
 
 part 'custom_placeholder.dart';

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'assets.dart';
 
 class AppColors {
-  static const primary = Color(0xFF184AB4);
+  static const primary = Color(0xFF0171CC);
   static const secondary = Color(0xFF0171CC);
   static const accent = Color(0xFFFD5E32);
   static const white = Colors.white;

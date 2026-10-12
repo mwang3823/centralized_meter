@@ -85,6 +85,21 @@ class CustomScaffold extends StatelessWidget {
           title == null
               ? null
               : AppBar(
+                // Đồng bộ với header trang chủ của app: nền xanh + hoạ tiết.
+                flexibleSpace: CustomHeaderDecoration(
+                  style: HeaderDecorationStyle.appBar,
+                ),
+                shape:
+                    tabs == null
+                        ? RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(20.0),
+                          ),
+                        )
+                        : null,
+                clipBehavior: Clip.antiAlias,
+                scrolledUnderElevation: 0.0,
+                surfaceTintColor: Colors.transparent,
                 leading: InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
