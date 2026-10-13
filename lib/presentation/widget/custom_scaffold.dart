@@ -140,12 +140,13 @@ class CustomScaffold extends StatelessWidget {
               Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset(
-                    Assets.resolve(Assets.imageBackgroundMain),
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
+                  if (backgroundColor != Colors.transparent)
+                    Image.asset(
+                      Assets.resolve(Assets.imageBackgroundMain),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
                   _buildContent(),
                 ],
               ),

@@ -358,6 +358,7 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
   }
 
   buildInfoBottomSheet({CustomerDetailResModel? model}) async {
+    if (!mounted) return;
     if (isShowBottom == true) {
       isShowBottom = false;
       await CustomDialog.showBottom(
@@ -391,6 +392,7 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
       CustomerDetailReqModel(danhBo: rawModel?.danhBo),
     );
     CustomLoading.hide();
+    if (!mounted) return;
     final CustomerDetailResModel data = CustomerDetailResModel.fromJson(
       response.data,
     );
@@ -405,6 +407,7 @@ class ContactDetailBloc extends BaseBloc<ContactDetailScreen>
       CustomerLocationReqModel(danhBo: rawModel?.danhBo),
       showError: false,
     );
+    if (!mounted) return;
     if (response.success) {
       toaDo = CustomerLocationResModel.fromJson(response.data);
       streamToaDo.set(toaDo);
